@@ -26,13 +26,15 @@ export function DraggableLabel({ id, areaType, area, label, color }: DraggableLa
     zIndex: isDragging ? 1000 : 'auto',
     cursor: isDragging ? 'grabbing' : 'grab',
     userSelect: 'none' as const,
-    width: '100%',
+    width: isDragging ? 'fit-content' : '100%',
     height: 'auto',
     padding: '12px 16px',
     fontSize: '0.9rem',
     fontWeight: 600,
     textAlign: 'center' as const,
     transition: isDragging ? 'none' : 'all 0.2s ease',
+    maxWidth: isDragging ? '250px' : 'none',
+    whiteSpace: isDragging ? 'nowrap' : 'normal',
   }
 
   return (

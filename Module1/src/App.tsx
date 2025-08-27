@@ -18,7 +18,7 @@ import { AnalysisPanel } from './components/AnalysisPanel'
 import { TutorialModal } from './components/TutorialModal'
 import { generateFactoryElements } from './utils/factoryData'
 
-// Add scrollbar styles
+// Add scrollbar and drag styles
 const scrollbarStyles = `
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
@@ -33,6 +33,19 @@ const scrollbarStyles = `
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #a8b0b8;
+  }
+  
+  /* Prevent horizontal scrolling during drag operations */
+  body.dragging {
+    overflow-x: hidden !important;
+  }
+  
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  * {
+    box-sizing: border-box;
   }
 `;
 
@@ -51,7 +64,13 @@ function App() {
   
   const factoryElements = generateFactoryElements()
 
+  const handleDragStart = () => {
+    document.body.classList.add('dragging')
+  }
+
   const handleDragEnd = (event: DragEndEvent) => {
+    document.body.classList.remove('dragging')
+    
     const { active, over } = event
     
     if (!over) return
@@ -121,84 +140,100 @@ function App() {
   }
 
   const checkAnswers = () => {
-    let correctCount = 0
+    let correctElementsCount = 0
     const feedback: Array<{ text: string; correct: boolean; type: string }> = []
     
-    // Count total assignments needed
-    let totalAssignmentsNeeded = 0
-    factoryElements.forEach(element => {
-      if (element.correctAnswer.operational !== null) totalAssignmentsNeeded++
-      if (element.correctAnswer.functional !== null) totalAssignmentsNeeded++
-    })
-
     factoryElements.forEach(element => {
       const assignment = assignments.get(element.id) || { functional: null, operational: null }
       const correct = element.correctAnswer
       
-      // Check operational assignment if needed
-      if (correct.operational !== null) {
-        const operationalCorrect = assignment.operational === correct.operational
-        if (operationalCorrect) {
-          correctCount++
-          feedback.push({
-            text: `${element.name}: ✓ Operational area correctly identified as ${correct.operational}`,
-            correct: true,
-            type: 'correct'
-          })
-        } else {
-          feedback.push({
-            text: `${element.name}: ✗ Incorrect operational area assignment (should be ${correct.operational})`,
-            correct: false,
-            type: assignment.operational ? 'incorrect' : 'incomplete'
-          })
-        }
-      }
-
-      // Check functional assignment if needed
-      if (correct.functional !== null) {
+      let elementIsCorrect = true
+      let elementFeedback = `${element.name}: `
+      
+      // Check if this is a functional-only answer
+      if ('functional' in correct && !('operational' in correct)) {
         const functionalCorrect = assignment.functional === correct.functional
         if (functionalCorrect) {
-          correctCount++
-          feedback.push({
-            text: `${element.name}: ✓ Functional area correctly identified as ${correct.functional}`,
-            correct: true,
-            type: 'correct'
-          })
+          elementFeedback += `✓ Functional area correctly identified as ${correct.functional}`
         } else {
-          feedback.push({
-            text: `${element.name}: ✗ Incorrect functional area assignment (should be ${correct.functional})`,
-            correct: false,
-            type: assignment.functional ? 'incorrect' : 'incomplete'
-          })
+          elementIsCorrect = false
+          elementFeedback += `✗ Incorrect functional area assignment (should be ${correct.functional})`
         }
+      }
+      // Check if this is an operational-only answer
+      else if ('operational' in correct && !('functional' in correct)) {
+        const operationalCorrect = assignment.operational === correct.operational
+        if (operationalCorrect) {
+          elementFeedback += `✓ Operational area correctly identified as ${correct.operational}`
+        } else {
+          elementIsCorrect = false
+          elementFeedback += `✗ Incorrect operational area assignment (should be ${correct.operational})`
+        }
+      }
+      
+      if (elementIsCorrect) {
+        correctElementsCount++
+        feedback.push({
+          text: elementFeedback,
+          correct: true,
+          type: 'correct'
+        })
+      } else {
+        feedback.push({
+          text: elementFeedback,
+          correct: false,
+          type: (assignment.functional || assignment.operational) ? 'incorrect' : 'incomplete'
+        })
       }
     })
 
-    const score = Math.round((correctCount / totalAssignmentsNeeded) * 100)
+    const totalElements = factoryElements.length
+    const score = Math.round((correctElementsCount / totalElements) * 100)
     setResultsVisible(true)
     
     notifications.show({
       title: 'Results Calculated',
-      message: `Your score: ${score}% (${correctCount}/${totalAssignmentsNeeded})`,
+      message: `Your score: ${score}% (${correctElementsCount}/${totalElements})`,
       color: score === 100 ? 'green' : score >= 70 ? 'orange' : 'red',
       autoClose: 5000,
     })
   }
 
-  // Count only assignments that matter for scoring
-  const assignedCount = Array.from(assignments.values()).reduce((count, assignment) => {
-    return count + (assignment.functional ? 1 : 0) + (assignment.operational ? 1 : 0)
+  // Count elements that have been correctly completed (for progress bar)
+  const correctlyCompletedCount = factoryElements.reduce((count, element) => {
+    const assignment = assignments.get(element.id)
+    if (!assignment) return count
+    
+    const correct = element.correctAnswer
+    let isCorrect = true
+    
+    // Check if this is a functional-only answer
+    if ('functional' in correct && !('operational' in correct)) {
+      if (assignment.functional !== correct.functional) {
+        isCorrect = false
+      }
+    }
+    // Check if this is an operational-only answer
+    else if ('operational' in correct && !('functional' in correct)) {
+      if (assignment.operational !== correct.operational) {
+        isCorrect = false
+      }
+    }
+    
+    return count + (isCorrect ? 1 : 0)
   }, 0)
 
-  // Count total assignments needed
-  const totalPossible = factoryElements.reduce((count, element) => {
-    return count + 
-      (element.correctAnswer.operational !== null ? 1 : 0) + 
-      (element.correctAnswer.functional !== null ? 1 : 0)
+  // Count elements that have any assignments (for button enable/disable)
+  const anyAssignmentsCount = Array.from(assignments.values()).reduce((count, assignment) => {
+    return count + (assignment.functional || assignment.operational ? 1 : 0)
   }, 0)
+
+  // Count total elements that need grading - should be exactly 20 graded items
+  // Each element counts as 1 item regardless of whether it needs functional, operational, or both
+  const totalPossible = factoryElements.length
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <AppShell
         header={{ height: { base: 180, md: 140 } }}
         padding={0}
@@ -230,11 +265,11 @@ function App() {
                   {/* Progress Bar */}
                   <Group align="center" gap="xs">
                     <Text c="white" size="sm" fw={500}>
-                      Progress: {assignedCount}/{totalPossible}
+                      Progress: {correctlyCompletedCount}/{totalPossible}
                     </Text>
                     <div style={{ width: 120, height: 8, backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: 4, overflow: 'hidden' }}>
                       <div style={{ 
-                        width: `${totalPossible > 0 ? (assignedCount / totalPossible) * 100 : 0}%`, 
+                        width: `${totalPossible > 0 ? (correctlyCompletedCount / totalPossible) * 100 : 0}%`, 
                         height: '100%', 
                         backgroundColor: '#40c057',
                         borderRadius: 4,
@@ -258,7 +293,7 @@ function App() {
                       color="blue"
                       size="sm"
                       onClick={checkAnswers}
-                      disabled={assignedCount === 0}
+                      disabled={anyAssignmentsCount === 0}
                     >
                       Check
                     </Button>

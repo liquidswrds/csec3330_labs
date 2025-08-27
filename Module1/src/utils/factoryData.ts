@@ -6,42 +6,42 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'external-ops-zone',
     name: 'External Operations Area',
     description: 'Drag operational area label here',
-    correctAnswer: { functional: 'logistics', operational: 'external' },
+    correctAnswer: { operational: 'external' },
     type: 'operational-zone'
   },
   {
     id: 'flour-supplier',
     name: 'Flour & Sugar Supplier',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'logistics', operational: 'external' },
+    correctAnswer: { functional: 'logistics' },
     type: 'functional-zone'
   },
   {
     id: 'packaging-supplier',
     name: 'Packaging Materials Supplier',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'logistics', operational: 'external' },
+    correctAnswer: { functional: 'logistics' },
     type: 'functional-zone'
   },
   {
     id: 'quality-lab',
     name: 'External Quality Lab',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'quality', operational: 'external' },
+    correctAnswer: { functional: 'quality' },
     type: 'functional-zone'
   },
   {
     id: 'distributors',
     name: 'Distribution Centers',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'logistics', operational: 'external' },
+    correctAnswer: { functional: 'logistics' },
     type: 'functional-zone'
   },
   {
     id: 'regulatory-agency',
     name: 'Food Safety Regulatory Agency',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'quality', operational: 'external' },
+    correctAnswer: { functional: 'quality' },
     type: 'functional-zone'
   },
 
@@ -50,7 +50,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'manufacturing-ops-zone',
     name: 'Manufacturing Operations Area',
     description: 'Drag operational area label here',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
+    correctAnswer: { operational: 'manufacturing' },
     type: 'operational-zone'
   },
   
@@ -59,7 +59,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'ingredient-preparation-functional-zone',
     name: 'Ingredient Preparation',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
+    correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
 
@@ -68,7 +68,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'mixing-recipe-functional-zone',
     name: 'Mixing & Recipe Control',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
+    correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
 
@@ -77,7 +77,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'cookie-forming-functional-zone',
     name: 'Cookie Forming',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
+    correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
 
@@ -86,7 +86,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'baking-operations-functional-zone',
     name: 'Baking Operations',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
+    correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
 
@@ -95,7 +95,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'cooling-systems-functional-zone',
     name: 'Cooling Systems',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
+    correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
 
@@ -104,7 +104,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'packaging-finishing-functional-zone',
     name: 'Packaging & Finishing',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
+    correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
 
@@ -113,7 +113,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'support-ops-zone',
     name: 'Support Operations Area',
     description: 'Drag operational area label here',
-    correctAnswer: { functional: 'control', operational: 'support' },
+    correctAnswer: { operational: 'support' },
     type: 'operational-zone'
   },
   // Process Control Center Functional Area
@@ -121,7 +121,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'process-control-functional-zone',
     name: 'Process Control Center',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'control', operational: 'support' },
+    correctAnswer: { functional: 'control' },
     type: 'functional-zone'
   },
   // Quality Assurance Lab Functional Area
@@ -129,7 +129,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'quality-assurance-functional-zone',
     name: 'Quality Assurance Lab',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'quality', operational: 'support' },
+    correctAnswer: { functional: 'quality' },
     type: 'functional-zone'
   },
   // Maintenance Operations Functional Area
@@ -137,7 +137,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'maintenance-operations-functional-zone',
     name: 'Maintenance Operations',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'maintenance', operational: 'support' },
+    correctAnswer: { functional: 'maintenance' },
     type: 'functional-zone'
   },
 
@@ -146,7 +146,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'network-ops-zone',
     name: 'Network Operations Area',
     description: 'Drag operational area label here',
-    correctAnswer: { functional: 'control', operational: 'network' },
+    correctAnswer: { operational: 'network' },
     type: 'operational-zone'
   },
   // Data Center Infrastructure Functional Area
@@ -154,7 +154,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'data-center-functional-zone',
     name: 'Data Center Infrastructure',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'control', operational: 'network' },
+    correctAnswer: { functional: 'control' },
     type: 'functional-zone'
   },
   // Network Infrastructure Functional Area
@@ -162,7 +162,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     id: 'network-infrastructure-functional-zone',
     name: 'Network Infrastructure',
     description: 'Drag functional area label here',
-    correctAnswer: { functional: 'control', operational: 'network' },
+    correctAnswer: { functional: 'control' },
     type: 'functional-zone'
   },
 ]

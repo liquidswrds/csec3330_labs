@@ -86,7 +86,8 @@ export function DropZone({
           <Group gap={4}>
             {assignment?.functional && (
               (() => {
-                const isCorrect = !correctAnswer || assignment.functional === correctAnswer.functional;
+                const isCorrect = !correctAnswer || 
+                  ('functional' in correctAnswer && assignment.functional === correctAnswer.functional);
                 return (
                   <Badge
                     variant="filled"
@@ -111,7 +112,8 @@ export function DropZone({
             )}
             {assignment?.operational && (
               (() => {
-                const isCorrect = !correctAnswer || assignment.operational === correctAnswer.operational;
+                const isCorrect = !correctAnswer || 
+                  ('operational' in correctAnswer && assignment.operational === correctAnswer.operational);
                 return (
                   <Badge
                     variant="filled"

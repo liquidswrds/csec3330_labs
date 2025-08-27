@@ -10,11 +10,45 @@ interface FactoryLayoutProps {
 }
 
 export function FactoryLayout({ elements, assignments, onRemoveAssignment }: FactoryLayoutProps) {
+  // Define which functional zones belong to which operational groups
+  const functionalZoneMapping = {
+    external: ['flour-supplier', 'packaging-supplier', 'quality-lab', 'distributors', 'regulatory-agency'],
+    manufacturing: [
+      'ingredient-preparation-functional-zone',
+      'mixing-recipe-functional-zone', 
+      'cookie-forming-functional-zone',
+      'baking-operations-functional-zone',
+      'cooling-systems-functional-zone',
+      'packaging-finishing-functional-zone'
+    ],
+    support: [
+      'process-control-functional-zone',
+      'quality-assurance-functional-zone', 
+      'maintenance-operations-functional-zone'
+    ],
+    network: [
+      'data-center-functional-zone',
+      'network-infrastructure-functional-zone'
+    ]
+  }
+
   // Group elements by operational area for layout
-  const externalElements = elements.filter(e => e.correctAnswer.operational === 'external')
-  const manufacturingElements = elements.filter(e => e.correctAnswer.operational === 'manufacturing')
-  const supportElements = elements.filter(e => e.correctAnswer.operational === 'support')
-  const networkElements = elements.filter(e => e.correctAnswer.operational === 'network')
+  const externalElements = elements.filter(e => 
+    ('operational' in e.correctAnswer && e.correctAnswer.operational === 'external') ||
+    functionalZoneMapping.external.includes(e.id)
+  )
+  const manufacturingElements = elements.filter(e => 
+    ('operational' in e.correctAnswer && e.correctAnswer.operational === 'manufacturing') ||
+    functionalZoneMapping.manufacturing.includes(e.id)
+  )
+  const supportElements = elements.filter(e => 
+    ('operational' in e.correctAnswer && e.correctAnswer.operational === 'support') ||
+    functionalZoneMapping.support.includes(e.id)
+  )
+  const networkElements = elements.filter(e => 
+    ('operational' in e.correctAnswer && e.correctAnswer.operational === 'network') ||
+    functionalZoneMapping.network.includes(e.id)
+  )
 
   // Function to get group styling based on operational assignment
   const getGroupStyle = (zoneId: string) => {
@@ -66,7 +100,7 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
             {assignment?.functional && (
               (() => {
                 const assignedFunctional = assignment.functional;
-                const correctFunctional = zone.correctAnswer.functional;
+                const correctFunctional = 'functional' in zone.correctAnswer ? zone.correctAnswer.functional : null;
                 const isCorrect = assignedFunctional === correctFunctional;
                 
                 return (
@@ -104,7 +138,7 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
             <OperationalDropZone 
               zoneId="external-ops-zone"
               title="Operations Group 1"
-              description="What type of operational area is this? (Drag label here)"
+              description="What type of operational area is this?"
             />
             <Text size="sm" c="dimmed" mb="md" ta="center">
               Systems and organizations outside the factory boundaries
@@ -138,31 +172,31 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
                         />
                         
                         {/* Component list */}
-                        <Box w="100%" p="xs" bg="gray.0" style={{ borderRadius: '4px' }}>
+                        <Box w="100%" bg="gray.0" style={{ borderRadius: '4px' }}>
                           <Text size="xs" c="dimmed" ta="center" mb="xs">Components:</Text>
                           {element.id === 'flour-supplier' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Bulk ingredient suppliers with EDI ordering</Text>
+                              <Text size="xs" c="black">Bulk ingredient suppliers with EDI ordering</Text>
                             </Stack>
                           )}
                           {element.id === 'packaging-supplier' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Film, boxes, labels with RFID tracking</Text>
+                              <Text size="xs" c="black">Film, boxes, labels with RFID tracking</Text>
                             </Stack>
                           )}
                           {element.id === 'quality-lab' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Third-party microbiological testing</Text>
+                              <Text size="xs" c="black">Third-party microbiological testing</Text>
                             </Stack>
                           )}
                           {element.id === 'distributors' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Temperature-controlled logistics network</Text>
+                              <Text size="xs" c="black">Temperature-controlled logistics network</Text>
                             </Stack>
                           )}
                           {element.id === 'regulatory-agency' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• FDA/USDA inspection and compliance</Text>
+                              <Text size="xs" c="black">FDA/USDA inspection and compliance</Text>
                             </Stack>
                           )}
                         </Box>
@@ -186,7 +220,7 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
             <OperationalDropZone 
               zoneId="manufacturing-ops-zone"
               title="Operations Group 2"
-              description="What type of operational area is this? (Drag label here)"
+              description="What type of operational area is this?"
             />
             <Text size="sm" c="dimmed" mb="md" ta="center">
               Direct production processes from ingredients to packaged cookies
@@ -225,44 +259,44 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
                           <Text size="xs" c="dimmed" ta="center" mb="xs">Components:</Text>
                           {element.id === 'ingredient-preparation-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Flour Storage Silos</Text>
-                              <Text size="xs" c="black">• Automated Weighing Systems</Text>
-                              <Text size="xs" c="black">• Ingredient Moisture Sensors</Text>
+                              <Text size="xs" c="black">Flour Storage Silos</Text>
+                              <Text size="xs" c="black">Automated Weighing Systems</Text>
+                              <Text size="xs" c="black">Ingredient Moisture Sensors</Text>
                             </Stack>
                           )}
                           {element.id === 'mixing-recipe-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Industrial Dough Mixers</Text>
-                              <Text size="xs" c="black">• Recipe Management System</Text>
-                              <Text size="xs" c="black">• Mixing Time & Speed Monitors</Text>
+                              <Text size="xs" c="black">Industrial Dough Mixers</Text>
+                              <Text size="xs" c="black">Recipe Management System</Text>
+                              <Text size="xs" c="black">Mixing Time & Speed Monitors</Text>
                             </Stack>
                           )}
                           {element.id === 'cookie-forming-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Cookie Forming Machines</Text>
-                              <Text size="xs" c="black">• Shape Quality Cameras</Text>
+                              <Text size="xs" c="black">Cookie Forming Machines</Text>
+                              <Text size="xs" c="black">Shape Quality Cameras</Text>
                             </Stack>
                           )}
                           {element.id === 'baking-operations-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Continuous Tunnel Ovens</Text>
-                              <Text size="xs" c="black">• Oven Temperature Control</Text>
-                              <Text size="xs" c="black">• Multi-Zone Temperature Sensors</Text>
-                              <Text size="xs" c="black">• Conveyor Speed Monitors</Text>
+                              <Text size="xs" c="black">Continuous Tunnel Ovens</Text>
+                              <Text size="xs" c="black">Oven Temperature Control</Text>
+                              <Text size="xs" c="black">Multi-Zone Temperature Sensors</Text>
+                              <Text size="xs" c="black">Conveyor Speed Monitors</Text>
                             </Stack>
                           )}
                           {element.id === 'cooling-systems-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Cooling Conveyor Systems</Text>
-                              <Text size="xs" c="black">• Industrial Cooling Fans</Text>
+                              <Text size="xs" c="black">Cooling Conveyor Systems</Text>
+                              <Text size="xs" c="black">Industrial Cooling Fans</Text>
                             </Stack>
                           )}
                           {element.id === 'packaging-finishing-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Cookie Wrapping Machines</Text>
-                              <Text size="xs" c="black">• Automated Boxing Systems</Text>
-                              <Text size="xs" c="black">• Package Weight Verification</Text>
-                              <Text size="xs" c="black">• Date/Lot Code Printers</Text>
+                              <Text size="xs" c="black">Cookie Wrapping Machines</Text>
+                              <Text size="xs" c="black">Automated Boxing Systems</Text>
+                              <Text size="xs" c="black">Package Weight Verification</Text>
+                              <Text size="xs" c="black">Date/Lot Code Printers</Text>
                             </Stack>
                           )}
                         </Box>
@@ -286,7 +320,7 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
             <OperationalDropZone 
               zoneId="support-ops-zone"
               title="Operations Group 3"
-              description="What type of operational area is this? (Drag label here)"
+              description="What type of operational area is this?"
             />
             <Text size="sm" c="dimmed" mb="md" ta="center">
               Systems that support production but don't directly make cookies
@@ -325,24 +359,24 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
                           <Text size="xs" c="dimmed" ta="center" mb="xs">Components:</Text>
                           {element.id === 'process-control-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Central Control Room</Text>
-                              <Text size="xs" c="black">• Operator HMI Stations</Text>
-                              <Text size="xs" c="black">• SCADA System</Text>
-                              <Text size="xs" c="black">• Production Database Server</Text>
+                              <Text size="xs" c="black">Central Control Room</Text>
+                              <Text size="xs" c="black">Operator HMI Stations</Text>
+                              <Text size="xs" c="black">SCADA System</Text>
+                              <Text size="xs" c="black">Production Database Server</Text>
                             </Stack>
                           )}
                           {element.id === 'quality-assurance-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• On-Site Quality Lab</Text>
-                              <Text size="xs" c="black">• Testing Equipment</Text>
-                              <Text size="xs" c="black">• Sample Tracking System</Text>
+                              <Text size="xs" c="black">On-Site Quality Lab</Text>
+                              <Text size="xs" c="black">Testing Equipment</Text>
+                              <Text size="xs" c="black">Sample Tracking System</Text>
                             </Stack>
                           )}
                           {element.id === 'maintenance-operations-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Maintenance Workshop</Text>
-                              <Text size="xs" c="black">• Spare Parts Inventory</Text>
-                              <Text size="xs" c="black">• Equipment Maintenance Database</Text>
+                              <Text size="xs" c="black">Maintenance Workshop</Text>
+                              <Text size="xs" c="black">Spare Parts Inventory</Text>
+                              <Text size="xs" c="black">Equipment Maintenance Database</Text>
                             </Stack>
                           )}
                         </Box>
@@ -366,7 +400,7 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
             <OperationalDropZone 
               zoneId="network-ops-zone"
               title="Operations Group 4"
-              description="What type of operational area is this? (Drag label here)"
+              description="What type of operational area is this?"
             />
             <Text size="sm" c="dimmed" mb="md" ta="center">
               IT infrastructure and communication systems
@@ -405,16 +439,16 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
                           <Text size="xs" c="dimmed" ta="center" mb="xs">Components:</Text>
                           {element.id === 'data-center-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• Data Center/Server Room</Text>
-                              <Text size="xs" c="black">• Network Security Firewalls</Text>
-                              <Text size="xs" c="black">• Industrial Network Switches</Text>
+                              <Text size="xs" c="black">Data Center/Server Room</Text>
+                              <Text size="xs" c="black">Network Security Firewalls</Text>
+                              <Text size="xs" c="black">Industrial Network Switches</Text>
                             </Stack>
                           )}
                           {element.id === 'network-infrastructure-functional-zone' && (
                             <Stack gap={2}>
-                              <Text size="xs" c="black">• OT Production Network</Text>
-                              <Text size="xs" c="black">• IT Corporate Network</Text>
-                              <Text size="xs" c="black">• Wireless Network Infrastructure</Text>
+                              <Text size="xs" c="black">OT Production Network</Text>
+                              <Text size="xs" c="black">IT Corporate Network</Text>
+                              <Text size="xs" c="black">Wireless Network Infrastructure</Text>
                             </Stack>
                           )}
                         </Box>

@@ -3,10 +3,15 @@ export interface Assignment {
   operational: string | null;
 }
 
-export interface CorrectAnswer {
-  functional: string | null;
-  operational: string | null;
+export interface FunctionalAnswer {
+  functional: string;
 }
+
+export interface OperationalAnswer {
+  operational: string;
+}
+
+export type CorrectAnswer = FunctionalAnswer | OperationalAnswer;
 
 export interface DraggableItem {
   id: string;

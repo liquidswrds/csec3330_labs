@@ -391,7 +391,7 @@ class DragDropBoundaryAssignment {
             if (assignment.operational && !assignment.functional) totalAssignments++;
         });
         
-        const totalPossible = this.totalElements * 2; // Both functional and operational for each element
+        const totalPossible = this.totalElements  // Both functional and operational for each element
         const percentage = totalPossible > 0 ? (totalAssignments / totalPossible) * 100 : 0;
         
         document.getElementById('assigned-count').textContent = `${functionalAssigned + operationalAssigned}`;

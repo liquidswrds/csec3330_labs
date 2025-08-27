@@ -58,42 +58,43 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
     const assignment = assignments.get(element.id) || { functional: null, operational: null }
     const correct = element.correctAnswer
     
-    // For operational zones, only check operational assignment
-    if (element.type === 'operational-zone') {
+    let elementIsCorrect = true
+    let elementFeedback = `${element.name}: `
+    
+    // Check if this is a functional-only answer
+    if ('functional' in correct && !('operational' in correct)) {
+      const functionalCorrect = assignment.functional === correct.functional
+      if (functionalCorrect) {
+        elementFeedback += `✓ Functional area correctly identified as ${correct.functional}`
+      } else {
+        elementIsCorrect = false
+        elementFeedback += `✗ Incorrect functional area assignment (should be ${correct.functional})`
+      }
+    }
+    // Check if this is an operational-only answer
+    else if ('operational' in correct && !('functional' in correct)) {
       const operationalCorrect = assignment.operational === correct.operational
       if (operationalCorrect) {
-        correctCount++
-        feedback.push({
-          text: `${element.name}: ✓ Operational area correctly identified`,
-          correct: true,
-          type: 'correct'
-        })
+        elementFeedback += `✓ Operational area correctly identified as ${correct.operational}`
       } else {
-        feedback.push({
-          text: `${element.name}: ✗ Incorrect operational area assignment`,
-          correct: false,
-          type: assignment.operational ? 'incorrect' : 'incomplete'
-        })
+        elementIsCorrect = false
+        elementFeedback += `✗ Incorrect operational area assignment (should be ${correct.operational})`
       }
+    }
+    
+    if (elementIsCorrect) {
+      correctCount++
+      feedback.push({
+        text: elementFeedback,
+        correct: true,
+        type: 'correct'
+      })
     } else {
-      // For regular elements, only check functional assignment (if it has one)
-      if (correct.functional) {
-        const functionalCorrect = assignment.functional === correct.functional
-        if (functionalCorrect) {
-          correctCount++
-          feedback.push({
-            text: `${element.name}: ✓ Functional area correct`,
-            correct: true,
-            type: 'correct'
-          })
-        } else {
-          feedback.push({
-            text: `${element.name}: ✗ Incorrect functional area assignment`,
-            correct: false,
-            type: assignment.functional ? 'incorrect' : 'incomplete'
-          })
-        }
-      }
+      feedback.push({
+        text: elementFeedback,
+        correct: false,
+        type: (assignment.functional || assignment.operational) ? 'incorrect' : 'incomplete'
+      })
     }
   })
 
@@ -106,7 +107,7 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
       radius="md" 
       withBorder 
       h="fit-content" 
-      style={{ position: { base: 'static', lg: 'sticky' }, top: 16 } as any}
+      style={{ position: { base: 'static', lg: 'sticky' } } as any}
     >
       <Stack gap="lg">
         <Title order={3} c="black">Analysis Results</Title>
@@ -129,7 +130,7 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
         <Divider />
 
         {/* Detailed Feedback */}
-        <Box style={{ maxHeight: '400px', overflowY: 'auto' }}>
+        <Box style={{ maxHeight: '50vh', overflowY: 'auto' }}>
           <Title order={4} mb="md" c="black">Detailed Feedback</Title>
           <Stack gap="xs">
             {feedback.map((item, index) => (
