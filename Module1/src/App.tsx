@@ -4,7 +4,6 @@ import {
   Title,
   Text,
   Button,
-  Grid,
   Container,
   Group,
   Stack,
@@ -286,15 +285,15 @@ function App() {
           </Container>
         </AppShell.Header>
 
-        <AppShell.Main>
-          <div style={{ display: 'flex', height: 'calc(100vh - 140px)' }}>
+        <AppShell.Main style={{ paddingTop: 0 }}>
+          <div style={{ display: 'flex', minHeight: '100%' }}>
             {/* Fixed Control Panel */}
             <div className="custom-scrollbar" style={{ 
               width: '280px', 
-              position: 'fixed', 
+              height: 'calc(100vh - 140px)',
+              position: 'fixed',
               left: 0, 
               top: '140px', 
-              height: 'calc(100vh - 140px)', 
               overflowY: 'auto',
               padding: '1rem',
               borderRight: '1px solid #e9ecef',
@@ -313,9 +312,8 @@ function App() {
               marginRight: '320px', 
               flex: 1, 
               padding: '1rem',
-              overflowY: 'auto',
-              height: 'calc(100vh - 140px)',
-              scrollbarWidth: 'thin'
+              minHeight: '100vh',
+              marginTop: '140px',
             }}>
               <FactoryLayout
                 elements={factoryElements}
@@ -330,7 +328,7 @@ function App() {
               position: 'fixed', 
               right: 0, 
               top: '140px', 
-              height: 'calc(100vh - 140px)', 
+              height: 'calc(100vh - 140px)',
               overflowY: 'auto',
               padding: '1rem',
               borderLeft: '1px solid #e9ecef',

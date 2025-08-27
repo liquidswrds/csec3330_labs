@@ -11,20 +11,20 @@ interface AnalysisPanelProps {
 export function AnalysisPanel({ visible, assignments, factoryElements }: AnalysisPanelProps) {
   if (!visible) {
     return (
-      <Paper p="lg" radius="md" withBorder h="fit-content" style={{ position: 'sticky', top: 16 }}>
+      <Paper p="lg" radius="md" withBorder h="fit-content" style={{ position: 'sticky' }}>
         <Stack gap="lg">
-          <Title order={3} c="dark">Analysis Results</Title>
-          <Text c="dimmed" ta="center" py="xl">
+          <Title order={3} c="black">Analysis Results</Title>
+          <Text c="black" ta="center" py="xl">
             Click "Check Answers" to see your results
           </Text>
           
           <Divider />
           
           <Box>
-            <Title order={4} mb="md">Assignment Guide</Title>
+            <Title order={4} mb="md" c="black">Assignment Guide</Title>
             <Stack gap="md">
               <Box>
-                <Text fw={600} size="sm" mb="xs">Functional Areas:</Text>
+                <Text fw={600} size="sm" mb="xs" c="black">Functional Areas:</Text>
                 <List size="xs" spacing={4}>
                   <List.Item><strong>Production:</strong> Systems that create/process the product</List.Item>
                   <List.Item><strong>Control:</strong> Systems that manage and coordinate operations</List.Item>
@@ -36,7 +36,7 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
               </Box>
               
               <Box>
-                <Text fw={600} size="sm" mb="xs">Operational Areas:</Text>
+                <Text fw={600} size="sm" mb="xs" c="black">Operational Areas:</Text>
                 <List size="xs" spacing={4}>
                   <List.Item><strong>Manufacturing:</strong> Direct production operations</List.Item>
                   <List.Item><strong>Support:</strong> Supporting operational functions</List.Item>
@@ -109,14 +109,14 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
       style={{ position: { base: 'static', lg: 'sticky' }, top: 16 } as any}
     >
       <Stack gap="lg">
-        <Title order={3} c="dark">Analysis Results</Title>
+        <Title order={3} c="black">Analysis Results</Title>
         
         {/* Score Summary */}
         <Box ta="center">
           <Title order={2} c={isComplete ? 'green' : score >= 70 ? 'orange' : 'red'}>
             {score}%
           </Title>
-          <Text size="lg" fw={500}>
+          <Text size="lg" fw={500} c="black">
             {correctCount} of {factoryElements.length} elements correct
           </Text>
           {isComplete && (
@@ -130,7 +130,7 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
 
         {/* Detailed Feedback */}
         <Box style={{ maxHeight: '400px', overflowY: 'auto' }}>
-          <Title order={4} mb="md">Detailed Feedback</Title>
+          <Title order={4} mb="md" c="black">Detailed Feedback</Title>
           <Stack gap="xs">
             {feedback.map((item, index) => (
               <Group key={index} gap="xs" align="flex-start">

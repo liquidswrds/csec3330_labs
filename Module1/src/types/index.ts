@@ -20,7 +20,7 @@ export interface DropZoneElement {
   name: string;
   description?: string;
   correctAnswer: CorrectAnswer;
-  type: 'system' | 'area' | 'network' | 'external' | 'operational-zone';
+  type: 'system' | 'area' | 'network' | 'external' | 'operational-zone' | 'functional-zone';
 }
 
 export interface FeedbackItem {

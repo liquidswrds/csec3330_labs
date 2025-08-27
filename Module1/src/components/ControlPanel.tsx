@@ -19,12 +19,12 @@ export function ControlPanel({
       h="fit-content"
     >
       <Stack gap="lg">
-        <Title order={3} c="dark" ta="center">Control Panel</Title>
+        <Title order={3} c="black" ta="center">Control Panel</Title>
         
         {/* Functional Areas */}
         <Stack gap="sm">
           <Title order={4} c="green.7">Functional Areas</Title>
-          <Text size="sm" c="dimmed">
+          <Text size="sm" c="black">
             Systems that perform specific functions
           </Text>
           {functionalAreas.map(area => (
@@ -42,7 +42,7 @@ export function ControlPanel({
         {/* Operational Areas */}
         <Stack gap="sm">
           <Title order={4} c="orange.7">Operational Areas</Title>
-          <Text size="sm" c="dimmed">
+          <Text size="sm" c="black">
             How systems are organized and grouped
           </Text>
           {operationalAreas.map(area => (

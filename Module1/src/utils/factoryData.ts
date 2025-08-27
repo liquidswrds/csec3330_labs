@@ -12,37 +12,37 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   {
     id: 'flour-supplier',
     name: 'Flour & Sugar Supplier',
-    description: 'Bulk ingredient suppliers with EDI ordering',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'logistics', operational: 'external' },
-    type: 'external'
+    type: 'functional-zone'
   },
   {
     id: 'packaging-supplier',
     name: 'Packaging Materials Supplier',
-    description: 'Film, boxes, labels with RFID tracking',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'logistics', operational: 'external' },
-    type: 'external'
+    type: 'functional-zone'
   },
   {
     id: 'quality-lab',
     name: 'External Quality Lab',
-    description: 'Third-party microbiological testing',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'quality', operational: 'external' },
-    type: 'external'
+    type: 'functional-zone'
   },
   {
     id: 'distributors',
     name: 'Distribution Centers',
-    description: 'Temperature-controlled logistics network',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'logistics', operational: 'external' },
-    type: 'external'
+    type: 'functional-zone'
   },
   {
     id: 'regulatory-agency',
     name: 'Food Safety Regulatory Agency',
-    description: 'FDA/USDA inspection and compliance',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'quality', operational: 'external' },
-    type: 'external'
+    type: 'functional-zone'
   },
 
   // Manufacturing Operations (Group 2) - Students need to identify this as "Manufacturing"
@@ -54,184 +54,58 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     type: 'operational-zone'
   },
   
-  // Ingredient Preparation Area
+  // Ingredient Preparation Functional Area
   {
-    id: 'ingredient-prep-area',
-    name: 'Ingredient Preparation Area',
-    description: 'Central staging area for ingredient processing',
+    id: 'ingredient-preparation-functional-zone',
+    name: 'Ingredient Preparation',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'area'
-  },
-  {
-    id: 'flour-silos',
-    name: 'Flour Storage Silos',
-    description: 'Bulk storage tanks with pneumatic delivery',
-    correctAnswer: { functional: 'logistics', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'ingredient-scales',
-    name: 'Automated Weighing Systems',
-    description: 'High-precision digital scales with batch control',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'moisture-sensors',
-    name: 'Ingredient Moisture Sensors',
-    description: 'Real-time humidity monitoring probes',
-    correctAnswer: { functional: 'monitoring', operational: 'manufacturing' },
-    type: 'system'
+    type: 'functional-zone'
   },
 
-  // Mixing Area
+  // Mixing & Recipe Control Functional Area
   {
-    id: 'mixing-area',
-    name: 'Dough Mixing Area',
-    description: 'High-capacity dough preparation zone',
+    id: 'mixing-recipe-functional-zone',
+    name: 'Mixing & Recipe Control',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'area'
-  },
-  {
-    id: 'industrial-mixers',
-    name: 'Industrial Dough Mixers',
-    description: 'Variable-speed planetary mixers (500L capacity)',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'recipe-control',
-    name: 'Recipe Management System',
-    description: 'Automated ingredient dosing control',
-    correctAnswer: { functional: 'control', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'mixing-sensors',
-    name: 'Mixing Time & Speed Monitors',
-    description: 'Torque and consistency measurement sensors',
-    correctAnswer: { functional: 'monitoring', operational: 'manufacturing' },
-    type: 'system'
+    type: 'functional-zone'
   },
 
-  // Forming Area
+  // Cookie Forming Functional Area
   {
-    id: 'forming-area',
-    name: 'Cookie Forming Area',
-    description: 'Automated cookie shaping and cutting zone',
+    id: 'cookie-forming-functional-zone',
+    name: 'Cookie Forming',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'area'
-  },
-  {
-    id: 'forming-machines',
-    name: 'Cookie Forming Machines',
-    description: 'Rotary molding and wire-cutting stations',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'shape-inspection',
-    name: 'Shape Quality Cameras',
-    description: 'Machine vision systems for dimensional check',
-    correctAnswer: { functional: 'monitoring', operational: 'manufacturing' },
-    type: 'system'
+    type: 'functional-zone'
   },
 
-  // Baking Area
+  // Baking Operations Functional Area
   {
-    id: 'baking-area',
-    name: 'Industrial Baking Area',
-    description: 'High-temperature continuous baking zone',
+    id: 'baking-operations-functional-zone',
+    name: 'Baking Operations',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'area'
-  },
-  {
-    id: 'tunnel-ovens',
-    name: 'Continuous Tunnel Ovens',
-    description: 'Multi-zone gas-fired ovens (400°F-450°F)',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'oven-controls',
-    name: 'Oven Temperature Control',
-    description: 'Zone-based heating and airflow control',
-    correctAnswer: { functional: 'control', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'temperature-monitoring',
-    name: 'Multi-Zone Temperature Sensors',
-    description: 'Infrared and thermocouple monitoring',
-    correctAnswer: { functional: 'monitoring', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'conveyor-sensors',
-    name: 'Conveyor Speed Monitors',
-    description: 'Belt speed and tension monitoring systems',
-    correctAnswer: { functional: 'monitoring', operational: 'manufacturing' },
-    type: 'system'
+    type: 'functional-zone'
   },
 
-  // Cooling Area
+  // Cooling Systems Functional Area
   {
-    id: 'cooling-area',
-    name: 'Cookie Cooling Area',
-    description: 'Controlled cooling and conditioning zone',
+    id: 'cooling-systems-functional-zone',
+    name: 'Cooling Systems',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'area'
-  },
-  {
-    id: 'cooling-conveyors',
-    name: 'Cooling Conveyor Systems',
-    description: 'Multi-tier spiral cooling belts',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'cooling-fans',
-    name: 'Industrial Cooling Fans',
-    description: 'Variable-speed air circulation systems',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
+    type: 'functional-zone'
   },
 
-  // Packaging Area
+  // Packaging & Finishing Functional Area
   {
-    id: 'packaging-area',
-    name: 'Automated Packaging Line',
-    description: 'High-speed packaging and labeling zone',
+    id: 'packaging-finishing-functional-zone',
+    name: 'Packaging & Finishing',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'area'
-  },
-  {
-    id: 'wrapping-machines',
-    name: 'Cookie Wrapping Machines',
-    description: 'Flow-wrap and heat-seal packaging systems',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'boxing-machines',
-    name: 'Automated Boxing Systems',
-    description: 'Robotic case packing and sealing',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'weight-checkers',
-    name: 'Package Weight Verification',
-    description: 'High-speed checkweigher systems',
-    correctAnswer: { functional: 'monitoring', operational: 'manufacturing' },
-    type: 'system'
-  },
-  {
-    id: 'date-coding',
-    name: 'Date/Lot Code Printers',
-    description: 'Inkjet and laser marking systems',
-    correctAnswer: { functional: 'production', operational: 'manufacturing' },
-    type: 'system'
+    type: 'functional-zone'
   },
 
   // Support Operations (Group 3) - Students need to identify this as "Support"
@@ -242,66 +116,29 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     correctAnswer: { functional: 'control', operational: 'support' },
     type: 'operational-zone'
   },
+  // Process Control Center Functional Area
   {
-    id: 'control-room',
-    name: 'Central Control Room',
-    description: 'Main operations center',
+    id: 'process-control-functional-zone',
+    name: 'Process Control Center',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'control', operational: 'support' },
-    type: 'area'
+    type: 'functional-zone'
   },
+  // Quality Assurance Lab Functional Area
   {
-    id: 'hmi-stations',
-    name: 'Operator HMI Stations',
-    correctAnswer: { functional: 'control', operational: 'support' },
-    type: 'system'
-  },
-  {
-    id: 'scada-system',
-    name: 'SCADA System',
-    correctAnswer: { functional: 'control', operational: 'support' },
-    type: 'system'
-  },
-  {
-    id: 'production-database',
-    name: 'Production Database Server',
-    correctAnswer: { functional: 'control', operational: 'support' },
-    type: 'system'
-  },
-  {
-    id: 'quality-lab-internal',
-    name: 'On-Site Quality Lab',
+    id: 'quality-assurance-functional-zone',
+    name: 'Quality Assurance Lab',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'quality', operational: 'support' },
-    type: 'area'
+    type: 'functional-zone'
   },
+  // Maintenance Operations Functional Area
   {
-    id: 'lab-equipment',
-    name: 'Testing Equipment',
-    correctAnswer: { functional: 'quality', operational: 'support' },
-    type: 'system'
-  },
-  {
-    id: 'sample-tracking',
-    name: 'Sample Tracking System',
-    correctAnswer: { functional: 'quality', operational: 'support' },
-    type: 'system'
-  },
-  {
-    id: 'maintenance-shop',
-    name: 'Maintenance Workshop',
+    id: 'maintenance-operations-functional-zone',
+    name: 'Maintenance Operations',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'maintenance', operational: 'support' },
-    type: 'area'
-  },
-  {
-    id: 'spare-parts',
-    name: 'Spare Parts Inventory',
-    correctAnswer: { functional: 'maintenance', operational: 'support' },
-    type: 'system'
-  },
-  {
-    id: 'cmms',
-    name: 'Equipment Maintenance Database',
-    correctAnswer: { functional: 'maintenance', operational: 'support' },
-    type: 'system'
+    type: 'functional-zone'
   },
 
   // Network Operations (Group 4) - Students need to identify this as "Network"
@@ -312,43 +149,21 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     correctAnswer: { functional: 'control', operational: 'network' },
     type: 'operational-zone'
   },
+  // Data Center Infrastructure Functional Area
   {
-    id: 'server-room',
-    name: 'Data Center/Server Room',
+    id: 'data-center-functional-zone',
+    name: 'Data Center Infrastructure',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'control', operational: 'network' },
-    type: 'area'
+    type: 'functional-zone'
   },
+  // Network Infrastructure Functional Area
   {
-    id: 'ot-network',
-    name: 'OT Production Network',
-    description: 'Isolated operational technology network',
+    id: 'network-infrastructure-functional-zone',
+    name: 'Network Infrastructure',
+    description: 'Drag functional area label here',
     correctAnswer: { functional: 'control', operational: 'network' },
-    type: 'network'
-  },
-  {
-    id: 'it-network',
-    name: 'IT Corporate Network',
-    description: 'Business systems, internet access',
-    correctAnswer: { functional: 'control', operational: 'network' },
-    type: 'network'
-  },
-  {
-    id: 'wireless-network',
-    name: 'Wireless Network Infrastructure',
-    correctAnswer: { functional: 'control', operational: 'network' },
-    type: 'network'
-  },
-  {
-    id: 'firewall-systems',
-    name: 'Network Security Firewalls',
-    correctAnswer: { functional: 'control', operational: 'network' },
-    type: 'system'
-  },
-  {
-    id: 'network-switches',
-    name: 'Industrial Network Switches',
-    correctAnswer: { functional: 'control', operational: 'network' },
-    type: 'system'
+    type: 'functional-zone'
   },
 ]
 

@@ -42,27 +42,25 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
           minHeight={80}
         >
           <Stack align="center" gap="xs">
-            <Text fw={700} size="lg" c="gray.7">
+            <Text fw={700} size="lg" c="black">
               {title}
             </Text>
-            <Text size="sm" c="dimmed" fs="italic">
+            <Text size="sm" c="black" fs="italic">
               {description}
             </Text>
             
-            {/* Functional area dropzone indicator */}
-            {zone.correctAnswer.functional && !assignment?.functional && (
-              <>
-                <Box 
-                  w={40} 
-                  h={4} 
-                  bg="green.2" 
-                  style={{ borderRadius: '2px', opacity: 0.8 }} 
-                />
-                <Text size="xs" c="green.6" fw={500} ta="center" fs="italic">
-                  Also drag functional area here
-                </Text>
-              </>
-            )}
+            {/* Operational area indicator */}
+            <>
+              <Box 
+                w={40} 
+                h={4} 
+                bg="green.2" 
+                style={{ borderRadius: '2px', opacity: 0.8 }} 
+              />
+              <Text size="xs" c="green.6" fw={500} ta="center" fs="italic">
+                Drag label here
+              </Text>
+            </>
 
             {/* Show functional assignment status with correct/incorrect feedback */}
             {assignment?.functional && (
@@ -84,70 +82,14 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
     )
   }
 
-  const renderElementGrid = (sectionElements: DropZoneElement[], cols: any = { base: 1, sm: 2, lg: 3 }) => (
-    <SimpleGrid cols={cols} spacing="md">
-      {sectionElements
-        .filter(e => e.type !== 'operational-zone')
-        .map(element => (
-          <DropZone
-            key={element.id}
-            id={element.id}
-            assignment={assignments.get(element.id)}
-            correctAnswer={element.correctAnswer}
-            onRemoveAssignment={onRemoveAssignment}
-            minHeight={element.type === 'area' ? 140 : 100}
-          >
-            <Stack gap="xs" align="center" h="100%" justify="center">
-              <Text fw={600} size="sm" ta="center" c="dark.7">
-                {element.name}
-              </Text>
-              {element.description && (
-                <Text size="xs" c="dimmed" ta="center" px="xs">
-                  {element.description}
-                </Text>
-              )}
-              {/* Visual indicator that this accepts functional assignments */}
-              {element.correctAnswer.functional && !assignments.get(element.id)?.functional && (
-                <>
-                  <Box 
-                    w={30} 
-                    h={4} 
-                    bg="green.2" 
-                    style={{ borderRadius: '2px', opacity: 0.8 }} 
-                  />
-                  <Text size="xs" c="green.6" fw={500} ta="center" fs="italic">
-                    Drop functional area here
-                  </Text>
-                </>
-              )}
-              {/* Show assigned functional area with correct/incorrect feedback */}
-              {assignments.get(element.id)?.functional && (
-                (() => {
-                  const assignedFunctional = assignments.get(element.id)?.functional;
-                  const correctFunctional = element.correctAnswer.functional;
-                  const isCorrect = assignedFunctional === correctFunctional;
-                  
-                  return (
-                    <Text size="xs" c={isCorrect ? "green.7" : "red.7"} fw={600} ta="center">
-                      {isCorrect ? "✓" : "✗"} {assignedFunctional}
-                    </Text>
-                  );
-                })()
-              )}
-            </Stack>
-          </DropZone>
-        ))
-      }
-    </SimpleGrid>
-  )
 
   return (
     <Paper p="md" radius="md" withBorder style={{ marginBottom: '2rem' }}>
       <Stack gap="xl">
-        <Title order={2} ta="center" c="dark">
+        <Title order={2} ta="center" c="black">
           Cookie Factory System Layout
         </Title>
-        <Text ta="center" c="dimmed">
+        <Text ta="center" c="black">
           Identify operational areas by dragging orange labels to the drop zones, then assign functional areas to each component.
         </Text>
 
@@ -167,7 +109,69 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
             <Text size="sm" c="dimmed" mb="md" ta="center">
               Systems and organizations outside the factory boundaries
             </Text>
-            {renderElementGrid(externalElements, { base: 1, sm: 2, md: 3 })}
+            {/* External Functional Areas */}
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
+              {externalElements
+                .filter(e => e.type === 'functional-zone')
+                .map(element => (
+                  <Box key={element.id}>
+                    <DropZone
+                      id={element.id}
+                      assignment={assignments.get(element.id)}
+                      correctAnswer={element.correctAnswer}
+                      onRemoveAssignment={onRemoveAssignment}
+                      minHeight={120}
+                    >
+                      <Stack gap="sm" align="center" h="100%" justify="center" p="md">
+                        <Title order={5} c="black" ta="center">
+                          {element.name}
+                        </Title>
+                        <Text size="xs" ta="center" fs="italic" style={{ color: '#40c057' }}>
+                          {element.description}
+                        </Text>
+                        
+                        {/* Visual indicator for functional area assignment */}
+                        <Box 
+                          w={30} 
+                          h={4} 
+                          style={{ backgroundColor: '#b2f2bb', borderRadius: '2px', opacity: 0.8 }} 
+                        />
+                        
+                        {/* Component list */}
+                        <Box w="100%" p="xs" bg="gray.0" style={{ borderRadius: '4px' }}>
+                          <Text size="xs" c="dimmed" ta="center" mb="xs">Components:</Text>
+                          {element.id === 'flour-supplier' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Bulk ingredient suppliers with EDI ordering</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'packaging-supplier' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Film, boxes, labels with RFID tracking</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'quality-lab' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Third-party microbiological testing</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'distributors' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Temperature-controlled logistics network</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'regulatory-agency' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• FDA/USDA inspection and compliance</Text>
+                            </Stack>
+                          )}
+                        </Box>
+                      </Stack>
+                    </DropZone>
+                  </Box>
+                ))
+              }
+            </SimpleGrid>
           </Paper>
         </Box>
 
@@ -188,74 +192,86 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
               Direct production processes from ingredients to packaged cookies
             </Text>
             
-            {/* Production Flow Areas */}
-            <Stack gap="lg">
-              {/* Ingredient Prep */}
-              <Box>
-                <Title order={5} c="blue.7" mb="sm">Ingredient Preparation</Title>
-                {renderElementGrid(
-                  manufacturingElements.filter(e => 
-                    ['ingredient-prep-area', 'flour-silos', 'ingredient-scales', 'moisture-sensors'].includes(e.id)
-                  ),
-                  { base: 1, sm: 2, md: 4 }
-                )}
-              </Box>
-
-              {/* Mixing */}
-              <Box>
-                <Title order={5} c="blue.7" mb="sm">Mixing & Recipe Control</Title>
-                {renderElementGrid(
-                  manufacturingElements.filter(e => 
-                    ['mixing-area', 'industrial-mixers', 'recipe-control', 'mixing-sensors'].includes(e.id)
-                  ),
-                  { base: 1, sm: 2, md: 4 }
-                )}
-              </Box>
-
-              {/* Forming */}
-              <Box>
-                <Title order={5} c="blue.7" mb="sm">Cookie Forming</Title>
-                {renderElementGrid(
-                  manufacturingElements.filter(e => 
-                    ['forming-area', 'forming-machines', 'shape-inspection'].includes(e.id)
-                  ),
-                  { base: 1, sm: 3 }
-                )}
-              </Box>
-
-              {/* Baking */}
-              <Box>
-                <Title order={5} c="blue.7" mb="sm">Baking Operations</Title>
-                {renderElementGrid(
-                  manufacturingElements.filter(e => 
-                    ['baking-area', 'tunnel-ovens', 'oven-controls', 'temperature-monitoring', 'conveyor-sensors'].includes(e.id)
-                  ),
-                  { base: 1, sm: 2, md: 3 }
-                )}
-              </Box>
-
-              {/* Cooling */}
-              <Box>
-                <Title order={5} c="blue.7" mb="sm">Cooling Systems</Title>
-                {renderElementGrid(
-                  manufacturingElements.filter(e => 
-                    ['cooling-area', 'cooling-conveyors', 'cooling-fans'].includes(e.id)
-                  ),
-                  { base: 1, sm: 3 }
-                )}
-              </Box>
-
-              {/* Packaging */}
-              <Box>
-                <Title order={5} c="blue.7" mb="sm">Packaging & Finishing</Title>
-                {renderElementGrid(
-                  manufacturingElements.filter(e => 
-                    ['packaging-area', 'wrapping-machines', 'boxing-machines', 'weight-checkers', 'date-coding'].includes(e.id)
-                  ),
-                  { base: 1, sm: 2, md: 3 }
-                )}
-              </Box>
-            </Stack>
+            {/* Manufacturing Functional Areas */}
+            <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
+              {manufacturingElements
+                .filter(e => e.type === 'functional-zone')
+                .map(element => (
+                  <Box key={element.id}>
+                    <DropZone
+                      id={element.id}
+                      assignment={assignments.get(element.id)}
+                      correctAnswer={element.correctAnswer}
+                      onRemoveAssignment={onRemoveAssignment}
+                      minHeight={120}
+                    >
+                      <Stack gap="sm" align="center" h="100%" justify="center" p="md">
+                        <Title order={5} c="black" ta="center">
+                          {element.name}
+                        </Title>
+                        <Text size="xs" ta="center" fs="italic" style={{ color: '#40c057' }}>
+                          {element.description}
+                        </Text>
+                        
+                        {/* Visual indicator for functional area assignment */}
+                        <Box 
+                          w={30} 
+                          h={4} 
+                          style={{ backgroundColor: '#b2f2bb', borderRadius: '2px', opacity: 0.8 }} 
+                        />
+                        
+                        {/* Component list */}
+                        <Box w="100%" p="xs" bg="gray.0" style={{ borderRadius: '4px' }}>
+                          <Text size="xs" c="dimmed" ta="center" mb="xs">Components:</Text>
+                          {element.id === 'ingredient-preparation-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Flour Storage Silos</Text>
+                              <Text size="xs" c="black">• Automated Weighing Systems</Text>
+                              <Text size="xs" c="black">• Ingredient Moisture Sensors</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'mixing-recipe-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Industrial Dough Mixers</Text>
+                              <Text size="xs" c="black">• Recipe Management System</Text>
+                              <Text size="xs" c="black">• Mixing Time & Speed Monitors</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'cookie-forming-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Cookie Forming Machines</Text>
+                              <Text size="xs" c="black">• Shape Quality Cameras</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'baking-operations-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Continuous Tunnel Ovens</Text>
+                              <Text size="xs" c="black">• Oven Temperature Control</Text>
+                              <Text size="xs" c="black">• Multi-Zone Temperature Sensors</Text>
+                              <Text size="xs" c="black">• Conveyor Speed Monitors</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'cooling-systems-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Cooling Conveyor Systems</Text>
+                              <Text size="xs" c="black">• Industrial Cooling Fans</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'packaging-finishing-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Cookie Wrapping Machines</Text>
+                              <Text size="xs" c="black">• Automated Boxing Systems</Text>
+                              <Text size="xs" c="black">• Package Weight Verification</Text>
+                              <Text size="xs" c="black">• Date/Lot Code Printers</Text>
+                            </Stack>
+                          )}
+                        </Box>
+                      </Stack>
+                    </DropZone>
+                  </Box>
+                ))
+              }
+            </SimpleGrid>
           </Paper>
         </Box>
 
@@ -276,40 +292,66 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
               Systems that support production but don't directly make cookies
             </Text>
             
-            <Stack gap="lg">
-              {/* Control Systems */}
-              <Box>
-                <Title order={5} c="purple.7" mb="sm">Process Control Center</Title>
-                {renderElementGrid(
-                  supportElements.filter(e => 
-                    ['control-room', 'hmi-stations', 'scada-system', 'production-database'].includes(e.id)
-                  ),
-                  { base: 1, sm: 2, md: 4 }
-                )}
-              </Box>
-
-              {/* Quality Lab */}
-              <Box>
-                <Title order={5} c="purple.7" mb="sm">Quality Assurance Lab</Title>
-                {renderElementGrid(
-                  supportElements.filter(e => 
-                    ['quality-lab-internal', 'lab-equipment', 'sample-tracking'].includes(e.id)
-                  ),
-                  { base: 1, sm: 3 }
-                )}
-              </Box>
-
-              {/* Maintenance */}
-              <Box>
-                <Title order={5} c="purple.7" mb="sm">Maintenance Operations</Title>
-                {renderElementGrid(
-                  supportElements.filter(e => 
-                    ['maintenance-shop', 'spare-parts', 'cmms'].includes(e.id)
-                  ),
-                  { base: 1, sm: 3 }
-                )}
-              </Box>
-            </Stack>
+            {/* Support Functional Areas */}
+            <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
+              {supportElements
+                .filter(e => e.type === 'functional-zone')
+                .map(element => (
+                  <Box key={element.id}>
+                    <DropZone
+                      id={element.id}
+                      assignment={assignments.get(element.id)}
+                      correctAnswer={element.correctAnswer}
+                      onRemoveAssignment={onRemoveAssignment}
+                      minHeight={120}
+                    >
+                      <Stack gap="sm" align="center" h="100%" justify="center" p="md">
+                        <Title order={5} c="black" ta="center">
+                          {element.name}
+                        </Title>
+                        <Text size="xs" ta="center" fs="italic" style={{ color: '#40c057' }}>
+                          {element.description}
+                        </Text>
+                        
+                        {/* Visual indicator for functional area assignment */}
+                        <Box 
+                          w={30} 
+                          h={4} 
+                          style={{ backgroundColor: '#b2f2bb', borderRadius: '2px', opacity: 0.8 }} 
+                        />
+                        
+                        {/* Component list */}
+                        <Box w="100%" p="xs" bg="gray.0" style={{ borderRadius: '4px' }}>
+                          <Text size="xs" c="dimmed" ta="center" mb="xs">Components:</Text>
+                          {element.id === 'process-control-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Central Control Room</Text>
+                              <Text size="xs" c="black">• Operator HMI Stations</Text>
+                              <Text size="xs" c="black">• SCADA System</Text>
+                              <Text size="xs" c="black">• Production Database Server</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'quality-assurance-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• On-Site Quality Lab</Text>
+                              <Text size="xs" c="black">• Testing Equipment</Text>
+                              <Text size="xs" c="black">• Sample Tracking System</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'maintenance-operations-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Maintenance Workshop</Text>
+                              <Text size="xs" c="black">• Spare Parts Inventory</Text>
+                              <Text size="xs" c="black">• Equipment Maintenance Database</Text>
+                            </Stack>
+                          )}
+                        </Box>
+                      </Stack>
+                    </DropZone>
+                  </Box>
+                ))
+              }
+            </SimpleGrid>
           </Paper>
         </Box>
 
@@ -330,29 +372,58 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment }: Fac
               IT infrastructure and communication systems
             </Text>
             
-            <Stack gap="lg">
-              {/* Data Center */}
-              <Box>
-                <Title order={5} c="orange.7" mb="sm">Data Center Infrastructure</Title>
-                {renderElementGrid(
-                  networkElements.filter(e => 
-                    ['server-room', 'firewall-systems', 'network-switches'].includes(e.id)
-                  ),
-                  { base: 1, sm: 3 }
-                )}
-              </Box>
-
-              {/* Networks */}
-              <Box>
-                <Title order={5} c="orange.7" mb="sm">Network Infrastructure</Title>
-                {renderElementGrid(
-                  networkElements.filter(e => 
-                    ['ot-network', 'it-network', 'wireless-network'].includes(e.id)
-                  ),
-                  { base: 1, sm: 3 }
-                )}
-              </Box>
-            </Stack>
+            {/* Network Functional Areas */}
+            <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+              {networkElements
+                .filter(e => e.type === 'functional-zone')
+                .map(element => (
+                  <Box key={element.id}>
+                    <DropZone
+                      id={element.id}
+                      assignment={assignments.get(element.id)}
+                      correctAnswer={element.correctAnswer}
+                      onRemoveAssignment={onRemoveAssignment}
+                      minHeight={120}
+                    >
+                      <Stack gap="sm" align="center" h="100%" justify="center" p="md">
+                        <Title order={5} c="black" ta="center">
+                          {element.name}
+                        </Title>
+                        <Text size="xs" ta="center" fs="italic" style={{ color: '#40c057' }}>
+                          {element.description}
+                        </Text>
+                        
+                        {/* Visual indicator for functional area assignment */}
+                        <Box 
+                          w={30} 
+                          h={4} 
+                          style={{ backgroundColor: '#b2f2bb', borderRadius: '2px', opacity: 0.8 }} 
+                        />
+                        
+                        {/* Component list */}
+                        <Box w="100%" p="xs" bg="gray.0" style={{ borderRadius: '4px' }}>
+                          <Text size="xs" c="dimmed" ta="center" mb="xs">Components:</Text>
+                          {element.id === 'data-center-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• Data Center/Server Room</Text>
+                              <Text size="xs" c="black">• Network Security Firewalls</Text>
+                              <Text size="xs" c="black">• Industrial Network Switches</Text>
+                            </Stack>
+                          )}
+                          {element.id === 'network-infrastructure-functional-zone' && (
+                            <Stack gap={2}>
+                              <Text size="xs" c="black">• OT Production Network</Text>
+                              <Text size="xs" c="black">• IT Corporate Network</Text>
+                              <Text size="xs" c="black">• Wireless Network Infrastructure</Text>
+                            </Stack>
+                          )}
+                        </Box>
+                      </Stack>
+                    </DropZone>
+                  </Box>
+                ))
+              }
+            </SimpleGrid>
           </Paper>
         </Box>
       </Stack>
