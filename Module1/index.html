@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookie Factory - Cybersecurity Boundary Analysis Lab</title>
+    <meta name="description" content="Interactive cookie factory for cybersecurity boundary analysis" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      
+      /* Mantine AppShell header styling */
+      [data-mantine-color-scheme] {
+        --mantine-color-body: #f5f7fa;
+      }
+      
+      /* Custom header gradient */
+      .mantine-AppShell-header {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+        border-bottom: none !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+      }
+      
+      /* Loading state */
+      #root {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
