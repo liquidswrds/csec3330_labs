@@ -1,6 +1,5 @@
-import { Paper, Title, Text, Stack, SimpleGrid, Button, Group } from '@mantine/core'
+import { Paper, Title, Text, Stack, SimpleGrid } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { IconKeyboard } from '@tabler/icons-react'
 import { DropZone } from '../../../shared/components/ui/DropZone'
 import { KeyboardAssignmentModal } from '../../../shared/components/ui/KeyboardAssignmentModal'
 import { Assignment, DropZoneElement } from '../../../shared/types/index'
@@ -42,16 +41,19 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment, onAss
       'cookie-forming-functional-zone',
       'baking-operations-functional-zone',
       'cooling-systems-functional-zone',
-      'packaging-finishing-functional-zone'
+      'packaging-finishing-functional-zone',
+      'production-monitoring-functional-zone'
     ],
     support: [
       'process-control-functional-zone',
       'quality-assurance-functional-zone', 
-      'maintenance-operations-functional-zone'
+      'maintenance-operations-functional-zone',
+      'environmental-monitoring-functional-zone'
     ],
     network: [
       'data-center-functional-zone',
-      'network-infrastructure-functional-zone'
+      'network-infrastructure-functional-zone',
+      'security-surveillance-functional-zone'
     ]
   }
 
@@ -119,27 +121,17 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment, onAss
               assignment={assignments.get(operationalZoneElement.id)}
               correctAnswer={operationalZoneElement.correctAnswer}
               onRemoveAssignment={onRemoveAssignment}
+              onKeyboardAssign={() => handleKeyboardAssign(operationalZoneElement)}
               minHeight={60}
             >
-              <Group justify="space-between" align="center">
-                <div style={{ flex: 1, textAlign: 'center' }}>
-                  <Text fw={500} size="sm" c="black">
-                    {operationalZoneElement.name}
-                  </Text>
-                  <Text size="xs" c="dimmed">
-                    {operationalZoneElement.description}
-                  </Text>
-                </div>
-                <Button
-                  variant="subtle"
-                  size="xs"
-                  onClick={() => handleKeyboardAssign(operationalZoneElement)}
-                  aria-label={`Assign areas to ${operationalZoneElement.name} using keyboard interface`}
-                  title="Open keyboard assignment"
-                >
-                  <IconKeyboard size={14} />
-                </Button>
-              </Group>
+              <div style={{ textAlign: 'center' }}>
+                <Text fw={500} size="sm" c="black">
+                  {operationalZoneElement.name}
+                </Text>
+                <Text size="xs" c="dimmed">
+                  {operationalZoneElement.description}
+                </Text>
+              </div>
             </DropZone>
           </div>
         )}
@@ -160,6 +152,7 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment, onAss
               assignment={assignments.get(element.id)}
               correctAnswer={element.correctAnswer}
               onRemoveAssignment={onRemoveAssignment}
+              onKeyboardAssign={() => handleKeyboardAssign(element)}
               minHeight={80}
             >
               <div>
@@ -181,30 +174,9 @@ export function FactoryLayout({ elements, assignments, onRemoveAssignment, onAss
 
   return (
     <Stack gap="lg" role="region" aria-label="Factory system layout">
-      <Group justify="space-between" align="center">
-        <Title order={3} c="black" id="factory-layout-title">
-          Cookie Factory System Layout
-        </Title>
-        <Button
-          variant="outline"
-          size="sm"
-          leftSection={<IconKeyboard size={16} />}
-          onClick={() => {
-            // Focus first element for keyboard assignment
-            const firstElement = elements.find(e => e.type === 'functional-zone')
-            if (firstElement) {
-              handleKeyboardAssign(firstElement)
-            }
-          }}
-          aria-label="Open keyboard assignment interface for screen readers and keyboard users"
-        >
-          Keyboard Mode
-        </Button>
-      </Group>
-      
-      <Text size="sm" c="dimmed" ta="center">
-        Use drag & drop OR click "Keyboard Mode" for accessible assignment interface
-      </Text>
+      <Title order={3} c="black" id="factory-layout-title" ta="center">
+        Cookie Factory System Layout
+      </Title>
       
       {/* Operational Zone 1 */}
       {externalElements.length > 0 && 

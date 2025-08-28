@@ -11,6 +11,7 @@ interface DropZoneProps {
   assignment?: Assignment
   correctAnswer?: CorrectAnswer
   onRemoveAssignment: (elementId: string, assignmentType: 'functional' | 'operational') => void
+  onKeyboardAssign?: () => void
   minHeight?: number
 }
 
@@ -20,6 +21,7 @@ export function DropZone({
   assignment, 
   correctAnswer,
   onRemoveAssignment, 
+  onKeyboardAssign,
   minHeight = 80
 }: DropZoneProps) {
   const { isOver, setNodeRef } = useDroppable({ id })
@@ -56,7 +58,14 @@ export function DropZone({
   }
 
   const dropZoneId = `dropzone-${id}`
-  const ariaLabel = `Drop zone for ${id}. ${hasAssignment ? `Currently contains: ${assignment?.functional ? `Functional area: ${assignment.functional}` : ''} ${assignment?.operational ? `Operational area: ${assignment.operational}` : ''}` : 'Empty drop zone'}`
+  const ariaLabel = `Drop zone for ${id}. ${hasAssignment ? `Currently contains: ${assignment?.functional ? `Functional area: ${assignment.functional}` : ''} ${assignment?.operational ? `Operational area: ${assignment.operational}` : ''}` : 'Empty drop zone'}${onKeyboardAssign ? '. Press Enter to open classification assistant' : ''}`
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' && onKeyboardAssign) {
+      event.preventDefault()
+      onKeyboardAssign()
+    }
+  }
 
   return (
     <Paper
@@ -68,6 +77,7 @@ export function DropZone({
       aria-label={ariaLabel}
       aria-describedby={`${dropZoneId}-status`}
       tabIndex={0}
+      onKeyDown={handleKeyDown}
       style={{
         minHeight,
         position: 'relative',

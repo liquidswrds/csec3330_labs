@@ -165,6 +165,33 @@ export const generateFactoryElements = (): DropZoneElement[] => [
     correctAnswer: { functional: 'control' },
     type: 'functional-zone'
   },
+
+  // Environmental Monitoring Functional Area (Support Zone)
+  {
+    id: 'environmental-monitoring-functional-zone',
+    name: 'Environmental Monitoring Station',
+    description: 'Facility climate and safety monitoring. Contains: temperature sensors, humidity sensors, air quality monitors, leak detection systems',
+    correctAnswer: { functional: 'monitoring' },
+    type: 'functional-zone'
+  },
+
+  // Production Line Monitoring Functional Area (Manufacturing Zone)
+  {
+    id: 'production-monitoring-functional-zone',
+    name: 'Production Line Monitoring Station',
+    description: 'Real-time production oversight. Contains: conveyor belt sensors, product counters, quality cameras, throughput monitors',
+    correctAnswer: { functional: 'monitoring' },
+    type: 'functional-zone'
+  },
+
+  // Security Surveillance Functional Area (Network Zone)
+  {
+    id: 'security-surveillance-functional-zone',
+    name: 'Security Surveillance Center',
+    description: 'Facility security monitoring. Contains: CCTV cameras, access control readers, motion detectors, alarm systems',
+    correctAnswer: { functional: 'monitoring' },
+    type: 'functional-zone'
+  },
 ]
 
 export const getElementColor = (type: string): string => {

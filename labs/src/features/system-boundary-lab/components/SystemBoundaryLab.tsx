@@ -8,10 +8,15 @@ import {
   Group,
   Stack,
   ActionIcon,
+  Modal,
+  Paper,
+  List,
+  Divider,
+  Kbd
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { DndContext } from '@dnd-kit/core'
-import { IconArrowLeft } from '@tabler/icons-react'
+import { IconArrowLeft, IconKeyboard } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
 import { FUNCTIONAL_AREAS, OPERATIONAL_AREAS } from '../../../shared/types/index'
 import { FactoryLayout } from './FactoryLayout'
@@ -144,13 +149,12 @@ const scrollbarStyles = `
 export function SystemBoundaryLab() {
   const navigate = useNavigate()
   const [tutorialOpened, { open: openTutorial, close: closeTutorial }] = useDisclosure(false)
+  const [keyboardInstructionsOpened, { open: openKeyboardInstructions, close: closeKeyboardInstructions }] = useDisclosure(false)
   const [showAnalysis, setShowAnalysis] = useState(false)
 
   const {
     assignments,
-    showCorrectAnswers,
     factoryElements,
-    setShowCorrectAnswers,
     handleAssignment,
     handleKeyboardAssignment,
     removeAssignment,
@@ -216,6 +220,14 @@ export function SystemBoundaryLab() {
               <Group gap="sm">
                 <Button 
                   variant="outline" 
+                  onClick={openKeyboardInstructions}
+                  leftSection={<IconKeyboard size={16} />}
+                  aria-label="View keyboard navigation instructions for screen reader users"
+                >
+                  Keyboard Help
+                </Button>
+                <Button 
+                  variant="outline" 
                   onClick={openTutorial}
                   aria-describedby="lab-description"
                 >
@@ -237,14 +249,7 @@ export function SystemBoundaryLab() {
                 >
                   Reset
                 </Button>
-                <Button
-                  variant="subtle"
-                  onClick={() => setShowCorrectAnswers(!showCorrectAnswers)}
-                  aria-label={`${showCorrectAnswers ? 'Hide' : 'Show'} correct answers`}
-                  aria-pressed={showCorrectAnswers}
-                >
-                  {showCorrectAnswers ? 'Hide' : 'Show'} Answers
-                </Button>
+
               </Group>
             </Group>
 
@@ -293,8 +298,8 @@ export function SystemBoundaryLab() {
                   role="complementary"
                   aria-label="Draggable labels and controls"
                   style={{ 
-                    minWidth: '280px', 
-                    maxWidth: '320px',
+                    width: '16.67%', // 1/6 of screen
+                    minWidth: '280px',
                     maxHeight: 'calc(100vh - 140px)', // Fit within viewport
                     overflowY: 'auto',
                     overflowX: 'hidden',
@@ -314,7 +319,7 @@ export function SystemBoundaryLab() {
                   aria-labelledby="lab-title"
                   aria-describedby="lab-description"
                   style={{ 
-                    flex: 1, 
+                    width: '66.67%', // 2/3 of screen
                     minWidth: 0,
                     height: 'calc(100vh - 140px)', // Full viewport minus header space
                     overflowY: 'auto',
@@ -337,8 +342,8 @@ export function SystemBoundaryLab() {
                   aria-label="Analysis and feedback panel"
                   aria-live="polite"
                   style={{ 
-                    minWidth: '300px', 
-                    maxWidth: '350px',
+                    width: '16.67%', // 1/6 of screen
+                    minWidth: '280px',
                     maxHeight: 'calc(100vh - 140px)', // Fit within viewport
                     overflowY: 'auto',
                     overflowX: 'hidden',
@@ -361,6 +366,117 @@ export function SystemBoundaryLab() {
           opened={tutorialOpened}
           onClose={closeTutorial}
         />
+
+        {/* Keyboard Instructions Modal */}
+        <Modal
+          opened={keyboardInstructionsOpened}
+          onClose={closeKeyboardInstructions}
+          title="Keyboard Navigation Instructions"
+          size="lg"
+          centered
+          aria-labelledby="keyboard-instructions-title"
+        >
+          <Stack gap="md">
+            <div>
+              <Title order={4} id="keyboard-instructions-title" mb="sm">
+                How to Use Keyboard Navigation
+              </Title>
+              <Text size="sm" c="dimmed">
+                This lab is fully accessible using only your keyboard. Follow these instructions to navigate and complete assignments.
+              </Text>
+            </div>
+
+            <Divider />
+
+            <Paper p="md" radius="md" style={{ backgroundColor: '#f8f9fa', border: '1px solid #e9ecef' }}>
+              <Title order={5} mb="sm">Navigation Basics</Title>
+              <List spacing="sm">
+                <List.Item>
+                  Use <Kbd>Tab</Kbd> to move forward through interactive elements
+                </List.Item>
+                <List.Item>
+                  Use <Kbd>Shift + Tab</Kbd> to move backward through elements
+                </List.Item>
+                <List.Item>
+                  Use <Kbd>Enter</Kbd> or <Kbd>Space</Kbd> to activate buttons and controls
+                </List.Item>
+                <List.Item>
+                  Use arrow keys to navigate within radio button groups and lists
+                </List.Item>
+              </List>
+            </Paper>
+
+            <Paper p="md" radius="md" style={{ backgroundColor: '#e3f2fd', border: '1px solid #bbdefb' }}>
+              <Title order={5} mb="sm">Making Assignments</Title>
+              <List spacing="sm">
+                <List.Item>
+                  <strong>Tab to any drop zone</strong> (operational zone or functional area)
+                </List.Item>
+                <List.Item>
+                  <strong>Press <Kbd>Enter</Kbd></strong> to open the classification assistant
+                </List.Item>
+                <List.Item>
+                  <strong>Read the system details</strong> provided at the top of the dialog
+                </List.Item>
+                <List.Item>
+                  <strong>Choose functional classification</strong> (what the system DOES) using arrow keys
+                </List.Item>
+                <List.Item>
+                  <strong>Choose operational classification</strong> (how the system is ORGANIZED) using arrow keys
+                </List.Item>
+                <List.Item>
+                  <strong>Click "Apply Classification"</strong> or press <Kbd>Enter</Kbd> to confirm
+                </List.Item>
+              </List>
+            </Paper>
+
+            <Paper p="md" radius="md" style={{ backgroundColor: '#f3e5f5', border: '1px solid #ce93d8' }}>
+              <Title order={5} mb="sm">Understanding Classifications</Title>
+              <Text size="sm" mb="sm">
+                <strong>Functional Areas</strong> answer "What does this system DO?"
+              </Text>
+              <List size="sm" spacing="xs" mb="md">
+                <List.Item><strong>Production:</strong> Directly creates or modifies products</List.Item>
+                <List.Item><strong>Control:</strong> Regulates and manages processes</List.Item>
+                <List.Item><strong>Monitoring:</strong> Observes and measures conditions</List.Item>
+                <List.Item><strong>Logistics:</strong> Handles supply chain and materials</List.Item>
+                <List.Item><strong>Maintenance:</strong> Maintains and repairs equipment</List.Item>
+                <List.Item><strong>Quality Assurance:</strong> Tests and ensures compliance</List.Item>
+              </List>
+              
+              <Text size="sm" mb="sm">
+                <strong>Operational Areas</strong> answer "How is this system ORGANIZED?"
+              </Text>
+              <List size="sm" spacing="xs">
+                <List.Item><strong>Manufacturing:</strong> Core production operations</List.Item>
+                <List.Item><strong>Support:</strong> Auxiliary operations that enable manufacturing</List.Item>
+                <List.Item><strong>External:</strong> Third-party and outside-the-fence systems</List.Item>
+                <List.Item><strong>Network:</strong> IT infrastructure and communications</List.Item>
+              </List>
+            </Paper>
+
+            <Paper p="md" radius="md" style={{ backgroundColor: '#fff3e0', border: '1px solid #ffcc02' }}>
+              <Title order={5} mb="sm">Tips for Success</Title>
+              <List spacing="sm">
+                <List.Item>
+                  Read the system description carefully - it contains key clues
+                </List.Item>
+                <List.Item>
+                  Each classification dialog shows all options with detailed explanations
+                </List.Item>
+                <List.Item>
+                  You can change assignments by pressing <Kbd>Enter</Kbd> on them again
+                </List.Item>
+                <List.Item>
+                  Use the "Check Answers" button to see how you're doing
+                </List.Item>
+                <List.Item>
+                  Your screen reader will announce all relevant information
+                </List.Item>
+              </List>
+            </Paper>
+          </Stack>
+        </Modal>
       </AppShell>
     </>
   )

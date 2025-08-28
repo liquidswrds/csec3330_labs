@@ -27,6 +27,17 @@ const labs = [
     difficulty: 'Beginner',
     estimatedTime: '30-45 minutes',
     topics: ['System Boundaries', 'Operational Areas', 'Functional Areas', 'Cybersecurity Fundamentals']
+  },
+  {
+    id: '2.1',
+    title: 'Interconnection Lab 1.2',
+    subtitle: 'System Interconnections & Dataflow Analysis',
+    description: 'Analyze interconnections between industrial systems, understand data flows, and assess cybersecurity risks in a realistic cookie factory environment.',
+    status: 'Available',
+    route: '/lab/1.2',
+    difficulty: 'Intermediate',
+    estimatedTime: '45-60 minutes',
+    topics: ['System Interconnections', 'Dataflow Analysis', 'Threat Assessment', 'Network Security']
   }
 ]
 
@@ -85,11 +96,11 @@ export function Dashboard() {
             </Text>
           </Paper>
 
-          {/* Module 1 Section */}
-          <section role="region" aria-labelledby="module-1-title">
+          {/* Labs Section */}
+          <section role="region" aria-labelledby="labs-title">
             <Group align="center" mb="lg">
-              <Title order={2} c={BRAND_COLORS.primary} fw={600} id="module-1-title">
-                Module 1: System Boundaries & System Lifecycle
+              <Title order={2} c={BRAND_COLORS.primary} fw={600} id="labs-title">
+                Available Labs
               </Title>
               <Badge 
                 size="md" 
