@@ -1,10 +1,10 @@
-import { DropZoneElement } from '../types'
+import { DropZoneElement } from '../../../shared/types/index'
 
 export const generateFactoryElements = (): DropZoneElement[] => [
-  // External Operations (Group 1) - Students need to identify this as "External"
+  // Operational Zone 1 - Students need to identify the operational area type
   {
     id: 'external-ops-zone',
-    name: 'External Operations Area',
+    name: 'Zone A',
     description: 'Drag operational area label here',
     correctAnswer: { operational: 'external' },
     type: 'operational-zone'
@@ -12,43 +12,43 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   {
     id: 'flour-supplier',
     name: 'Flour & Sugar Supplier',
-    description: 'Drag functional area label here',
+    description: 'Third-party vendor providing raw materials. Contains: delivery trucks, storage silos, supplier contracts',
     correctAnswer: { functional: 'logistics' },
     type: 'functional-zone'
   },
   {
     id: 'packaging-supplier',
     name: 'Packaging Materials Supplier',
-    description: 'Drag functional area label here',
+    description: 'External vendor for boxes, labels, wrapping. Contains: delivery schedules, inventory tracking',
     correctAnswer: { functional: 'logistics' },
     type: 'functional-zone'
   },
   {
     id: 'quality-lab',
-    name: 'External Quality Lab',
-    description: 'Drag functional area label here',
+    name: 'Third-Party Testing Lab',
+    description: 'Independent facility for product testing. Contains: testing equipment, certification processes',
     correctAnswer: { functional: 'quality' },
     type: 'functional-zone'
   },
   {
     id: 'distributors',
     name: 'Distribution Centers',
-    description: 'Drag functional area label here',
+    description: 'Warehouses and shipping facilities. Contains: loading docks, tracking systems, delivery routes',
     correctAnswer: { functional: 'logistics' },
     type: 'functional-zone'
   },
   {
     id: 'regulatory-agency',
     name: 'Food Safety Regulatory Agency',
-    description: 'Drag functional area label here',
+    description: 'Government oversight organization. Contains: inspection schedules, compliance documentation',
     correctAnswer: { functional: 'quality' },
     type: 'functional-zone'
   },
 
-  // Manufacturing Operations (Group 2) - Students need to identify this as "Manufacturing"
+  // Operational Zone 2 - Students need to identify the operational area type
   {
     id: 'manufacturing-ops-zone',
-    name: 'Manufacturing Operations Area',
+    name: 'Zone B',
     description: 'Drag operational area label here',
     correctAnswer: { operational: 'manufacturing' },
     type: 'operational-zone'
@@ -57,8 +57,8 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   // Ingredient Preparation Functional Area
   {
     id: 'ingredient-preparation-functional-zone',
-    name: 'Ingredient Preparation',
-    description: 'Drag functional area label here',
+    name: 'Ingredient Preparation Station',
+    description: 'Raw material processing area. Contains: mixing bowls, measuring equipment, ingredient scales',
     correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
@@ -66,8 +66,8 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   // Mixing & Recipe Control Functional Area
   {
     id: 'mixing-recipe-functional-zone',
-    name: 'Mixing & Recipe Control',
-    description: 'Drag functional area label here',
+    name: 'Mixing & Recipe Control Station',
+    description: 'Dough preparation area. Contains: industrial mixers, recipe terminals, batch tracking systems',
     correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
@@ -75,8 +75,8 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   // Cookie Forming Functional Area
   {
     id: 'cookie-forming-functional-zone',
-    name: 'Cookie Forming',
-    description: 'Drag functional area label here',
+    name: 'Cookie Forming Station',
+    description: 'Shape creation area. Contains: molding machines, cutting equipment, conveyor belts',
     correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
@@ -84,8 +84,8 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   // Baking Operations Functional Area
   {
     id: 'baking-operations-functional-zone',
-    name: 'Baking Operations',
-    description: 'Drag functional area label here',
+    name: 'Baking Operations Station',
+    description: 'Heat treatment area. Contains: industrial ovens, temperature sensors, timing controls',
     correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
@@ -93,8 +93,8 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   // Cooling Systems Functional Area
   {
     id: 'cooling-systems-functional-zone',
-    name: 'Cooling Systems',
-    description: 'Drag functional area label here',
+    name: 'Cooling Systems Station',
+    description: 'Temperature reduction area. Contains: cooling racks, ventilation systems, humidity controls',
     correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
@@ -102,16 +102,16 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   // Packaging & Finishing Functional Area
   {
     id: 'packaging-finishing-functional-zone',
-    name: 'Packaging & Finishing',
-    description: 'Drag functional area label here',
+    name: 'Packaging & Finishing Station',
+    description: 'Final processing area. Contains: wrapping machines, labeling equipment, boxing systems',
     correctAnswer: { functional: 'production' },
     type: 'functional-zone'
   },
 
-  // Support Operations (Group 3) - Students need to identify this as "Support"
+  // Operational Zone 3 - Students need to identify the operational area type
   {
     id: 'support-ops-zone',
-    name: 'Support Operations Area',
+    name: 'Zone C',
     description: 'Drag operational area label here',
     correctAnswer: { operational: 'support' },
     type: 'operational-zone'
@@ -120,31 +120,31 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   {
     id: 'process-control-functional-zone',
     name: 'Process Control Center',
-    description: 'Drag functional area label here',
+    description: 'Central monitoring facility. Contains: SCADA systems, control panels, operator workstations',
     correctAnswer: { functional: 'control' },
     type: 'functional-zone'
   },
   // Quality Assurance Lab Functional Area
   {
     id: 'quality-assurance-functional-zone',
-    name: 'Quality Assurance Lab',
-    description: 'Drag functional area label here',
+    name: 'Internal Quality Lab',
+    description: 'On-site testing facility. Contains: testing equipment, sample storage, analysis workbenches',
     correctAnswer: { functional: 'quality' },
     type: 'functional-zone'
   },
   // Maintenance Operations Functional Area
   {
     id: 'maintenance-operations-functional-zone',
-    name: 'Maintenance Operations',
-    description: 'Drag functional area label here',
+    name: 'Equipment Maintenance Shop',
+    description: 'Repair and upkeep facility. Contains: tool storage, spare parts, maintenance schedules',
     correctAnswer: { functional: 'maintenance' },
     type: 'functional-zone'
   },
 
-  // Network Operations (Group 4) - Students need to identify this as "Network"
+  // Operational Zone 4 - Students need to identify the operational area type
   {
     id: 'network-ops-zone',
-    name: 'Network Operations Area',
+    name: 'Zone D',
     description: 'Drag operational area label here',
     correctAnswer: { operational: 'network' },
     type: 'operational-zone'
@@ -153,7 +153,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   {
     id: 'data-center-functional-zone',
     name: 'Data Center Infrastructure',
-    description: 'Drag functional area label here',
+    description: 'Computing infrastructure facility. Contains: servers, storage systems, backup equipment',
     correctAnswer: { functional: 'control' },
     type: 'functional-zone'
   },
@@ -161,7 +161,7 @@ export const generateFactoryElements = (): DropZoneElement[] => [
   {
     id: 'network-infrastructure-functional-zone',
     name: 'Network Infrastructure',
-    description: 'Drag functional area label here',
+    description: 'Communication systems facility. Contains: switches, routers, firewalls, wireless access points',
     correctAnswer: { functional: 'control' },
     type: 'functional-zone'
   },

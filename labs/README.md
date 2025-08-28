@@ -95,3 +95,10 @@ Students should document:
 2. Critical interconnections between internal and external systems
 3. Data flow paths and their security implications
 4. Recommendations for improving boundary security
+
+## ToDo
+
+- add new lab to identify logical and physical boundaries
+- add new lab to identify data flows
+- add new lab to identify interconnections
+

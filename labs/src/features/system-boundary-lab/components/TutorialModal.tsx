@@ -14,14 +14,27 @@ export function TutorialModal({ opened, onClose }: TutorialModalProps) {
       title="Cookie Factory Lab Tutorial"
       size="lg"
       centered
+      aria-labelledby="tutorial-title"
+      aria-describedby="tutorial-description"
+      closeButtonProps={{
+        'aria-label': 'Close tutorial modal'
+      }}
+      overlayProps={{
+        backgroundOpacity: 0.55,
+        blur: 3
+      }}
+      transitionProps={{
+        transition: 'fade',
+        duration: 200
+      }}
     >
-      <Stack gap="lg">
+      <Stack gap="lg" role="article">
         <Stack gap="md">
           <Group gap="sm">
-            <IconTarget size={24} color="#228be6" />
-            <Title order={3}>Lab Objective</Title>
+            <IconTarget size={24} color="#1976d2" aria-hidden="true" />
+            <Title order={3} id="tutorial-title">Lab Objective</Title>
           </Group>
-          <Text>
+          <Text id="tutorial-description">
             Analyze the Cookie Manufacturing Company's production facility by identifying 
             both functional areas (what each system does) and operational areas (how different 
             groups of systems are organized).
@@ -30,12 +43,12 @@ export function TutorialModal({ opened, onClose }: TutorialModalProps) {
 
         <Stack gap="md">
           <Group gap="sm">
-            <IconDragDrop size={24} color="#40c057" />
+            <IconDragDrop size={24} color="#2e7d32" aria-hidden="true" />
             <Title order={3}>How to Complete the Lab</Title>
           </Group>
           <List spacing="sm">
             <List.Item>
-              <strong>Step 1 - Identify Operational Areas:</strong> Look at each "Operations Group" 
+              <strong>Step 1 - Identify Operational Areas:</strong> Look at each "Operational Group" 
               and drag the correct orange operational label (Manufacturing, Support, External, Network) 
               to the drop zone at the top of each group.
             </List.Item>
@@ -58,7 +71,7 @@ export function TutorialModal({ opened, onClose }: TutorialModalProps) {
 
         <Stack gap="md">
           <Group gap="sm">
-            <IconPlayerPlay size={24} color="#fd7e14" />
+            <IconPlayerPlay size={24} color="#f57c00" aria-hidden="true" />
             <Title order={3}>Quick Reference</Title>
           </Group>
           <Stack gap="xs">
@@ -68,12 +81,19 @@ export function TutorialModal({ opened, onClose }: TutorialModalProps) {
             </Text>
             <Text size="sm"><strong>Operational Areas</strong> (how systems are grouped):</Text>
             <Text size="xs" c="dimmed" pl="md">
-              Manufacturing Operations • Support Operations • External Operations • Network Operations
+              Manufacturing • Support • External • Network
             </Text>
           </Stack>
         </Stack>
 
-        <Button onClick={onClose} fullWidth size="md" variant="filled">
+        <Button 
+          onClick={onClose} 
+          fullWidth 
+          size="md" 
+          variant="filled"
+          autoFocus
+          aria-describedby="tutorial-description"
+        >
           Start Lab
         </Button>
       </Stack>

@@ -1,6 +1,6 @@
 import { Paper, Title, Stack, Text, List, Badge, Box, Divider, Group } from '@mantine/core'
 import { IconCheck, IconX, IconAlertTriangle } from '@tabler/icons-react'
-import { Assignment, DropZoneElement } from '../types'
+import { Assignment, DropZoneElement } from '../../../shared/types/index'
 
 interface AnalysisPanelProps {
   visible: boolean
@@ -11,21 +11,38 @@ interface AnalysisPanelProps {
 export function AnalysisPanel({ visible, assignments, factoryElements }: AnalysisPanelProps) {
   if (!visible) {
     return (
-      <Paper p="lg" radius="md" withBorder h="fit-content" style={{ position: 'sticky' }}>
+      <Paper 
+        p="lg" 
+        radius="md" 
+        withBorder 
+        h="fit-content"
+        role="region"
+        aria-label="Analysis results and assignment guide"
+        style={{
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          borderColor: '#e0e0e0'
+        }}
+      >
         <Stack gap="lg">
-          <Title order={3} c="black">Analysis Results</Title>
-          <Text c="black" ta="center" py="xl">
+          <Title order={3} c="black" id="analysis-title">
+            Analysis Results
+          </Title>
+          <Text c="black" ta="center" py="xl" role="status">
             Click "Check Answers" to see your results
           </Text>
           
           <Divider />
           
-          <Box>
-            <Title order={4} mb="md" c="black">Assignment Guide</Title>
+          <Box role="complementary" aria-labelledby="assignment-guide-title">
+            <Title order={4} mb="md" c="black" id="assignment-guide-title">
+              Assignment Guide
+            </Title>
             <Stack gap="md">
               <Box>
-                <Text fw={600} size="sm" mb="xs" c="black">Functional Areas:</Text>
-                <List size="xs" spacing={4}>
+                <Text fw={600} size="sm" mb="xs" c="black" component="h5">
+                  Functional Areas:
+                </Text>
+                <List size="xs" spacing={4} role="list">
                   <List.Item><strong>Production:</strong> Systems that create/process the product</List.Item>
                   <List.Item><strong>Control:</strong> Systems that manage and coordinate operations</List.Item>
                   <List.Item><strong>Monitoring:</strong> Systems that observe and measure processes</List.Item>
@@ -36,8 +53,10 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
               </Box>
               
               <Box>
-                <Text fw={600} size="sm" mb="xs" c="black">Operational Areas:</Text>
-                <List size="xs" spacing={4}>
+                <Text fw={600} size="sm" mb="xs" c="black" component="h5">
+                  Operational Areas:
+                </Text>
+                <List size="xs" spacing={4} role="list">
                   <List.Item><strong>Manufacturing:</strong> Direct production operations</List.Item>
                   <List.Item><strong>Support:</strong> Supporting operational functions</List.Item>
                   <List.Item><strong>External:</strong> Outside organization operations</List.Item>
@@ -106,22 +125,34 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
       p="lg" 
       radius="md" 
       withBorder 
-      h="fit-content" 
-      style={{ position: { base: 'static', lg: 'sticky' } } as any}
+      h="fit-content"
+      role="region"
+      aria-label="Analysis results and feedback"
+      aria-live="polite"
+      style={{
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        borderColor: '#e0e0e0'
+      }}
     >
       <Stack gap="lg">
-        <Title order={3} c="black">Analysis Results</Title>
+        <Title order={3} c="black" id="results-title">
+          Analysis Results
+        </Title>
         
         {/* Score Summary */}
-        <Box ta="center">
-          <Title order={2} c={isComplete ? 'green' : score >= 70 ? 'orange' : 'red'}>
+        <Box ta="center" role="status" aria-labelledby="score-summary">
+          <Title 
+            order={2} 
+            c={isComplete ? 'success.6' : score >= 70 ? 'warning.6' : 'error.6'}
+            id="score-summary"
+          >
             {score}%
           </Title>
           <Text size="lg" fw={500} c="black">
             {correctCount} of {factoryElements.length} elements correct
           </Text>
           {isComplete && (
-            <Badge color="green" size="lg" variant="filled" mt="xs">
+            <Badge color="success" size="lg" variant="filled" mt="xs">
               🎉 Perfect Score!
             </Badge>
           )}
@@ -130,21 +161,43 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
         <Divider />
 
         {/* Detailed Feedback */}
-        <Box style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-          <Title order={4} mb="md" c="black">Detailed Feedback</Title>
-          <Stack gap="xs">
+        <Box 
+          style={{ maxHeight: '50vh', overflowY: 'auto' }}
+          role="region"
+          aria-labelledby="detailed-feedback-title"
+        >
+          <Title order={4} mb="md" c="black" id="detailed-feedback-title">
+            Detailed Feedback
+          </Title>
+          <Stack gap="xs" role="list">
             {feedback.map((item, index) => (
-              <Group key={index} gap="xs" align="flex-start">
+              <Group key={index} gap="xs" align="flex-start" role="listitem">
                 {item.type === 'correct' ? (
-                  <IconCheck size={16} color="green" style={{ flexShrink: 0, marginTop: 2 }} />
+                  <IconCheck 
+                    size={16} 
+                    color="#2e7d32" 
+                    style={{ flexShrink: 0, marginTop: 2 }} 
+                    aria-label="Correct"
+                  />
                 ) : item.type === 'incorrect' ? (
-                  <IconX size={16} color="red" style={{ flexShrink: 0, marginTop: 2 }} />
+                  <IconX 
+                    size={16} 
+                    color="#d32f2f" 
+                    style={{ flexShrink: 0, marginTop: 2 }} 
+                    aria-label="Incorrect"
+                  />
                 ) : (
-                  <IconAlertTriangle size={16} color="orange" style={{ flexShrink: 0, marginTop: 2 }} />
+                  <IconAlertTriangle 
+                    size={16} 
+                    color="#f57c00" 
+                    style={{ flexShrink: 0, marginTop: 2 }} 
+                    aria-label="Incomplete"
+                  />
                 )}
                 <Text 
                   size="sm" 
-                  c={item.type === 'correct' ? 'green' : item.type === 'incorrect' ? 'red' : 'orange'}
+                  c={item.type === 'correct' ? 'success.6' : item.type === 'incorrect' ? 'error.6' : 'warning.6'}
+                  component="span"
                 >
                   {item.text}
                 </Text>
@@ -155,9 +208,9 @@ export function AnalysisPanel({ visible, assignments, factoryElements }: Analysi
 
         {/* Encouragement */}
         {!isComplete && (
-          <Box>
+          <Box role="complementary">
             <Divider />
-            <Text size="sm" c="dimmed" ta="center" fs="italic" mt="md">
+            <Text size="sm" c="dimmed" ta="center" fs="italic" mt="md" component="p">
               {score >= 80 
                 ? "Almost there! Review the feedback above."
                 : score >= 50 

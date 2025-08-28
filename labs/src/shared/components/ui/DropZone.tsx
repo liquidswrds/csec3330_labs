@@ -2,8 +2,8 @@ import { ReactNode } from 'react'
 import { Paper, Group, Badge, ActionIcon, Box } from '@mantine/core'
 import { useDroppable } from '@dnd-kit/core'
 import { IconX } from '@tabler/icons-react'
-import { Assignment, CorrectAnswer } from '../types'
-import { FUNCTIONAL_COLORS, OPERATIONAL_COLORS, DEFAULT_COLORS } from '../utils/colors'
+import { Assignment, CorrectAnswer } from '../../types/index'
+import { FUNCTIONAL_COLORS, OPERATIONAL_COLORS, DEFAULT_COLORS } from '../../utils/colors'
 
 interface DropZoneProps {
   id: string
@@ -55,24 +55,49 @@ export function DropZone({
     return DEFAULT_COLORS.border
   }
 
+  const dropZoneId = `dropzone-${id}`
+  const ariaLabel = `Drop zone for ${id}. ${hasAssignment ? `Currently contains: ${assignment?.functional ? `Functional area: ${assignment.functional}` : ''} ${assignment?.operational ? `Operational area: ${assignment.operational}` : ''}` : 'Empty drop zone'}`
+
   return (
     <Paper
       ref={setNodeRef}
       p="md"
       radius="md"
       withBorder
+      role="region"
+      aria-label={ariaLabel}
+      aria-describedby={`${dropZoneId}-status`}
+      tabIndex={0}
       style={{
         minHeight,
         position: 'relative',
         borderColor: getBorderColor(),
-        borderWidth: isOver ? 2 : 1,
+        borderWidth: isOver ? 3 : 2,
         backgroundColor: getBackgroundColor(),
         transform: isOver ? 'scale(1.02)' : 'scale(1)',
         transition: 'all 0.2s ease',
         cursor: isOver ? 'copy' : 'default',
+        outline: 'none',
+        boxShadow: isOver ? '0 4px 12px rgba(0, 0, 0, 0.15)' : '0 1px 3px rgba(0, 0, 0, 0.1)',
+        ':focus': {
+          outline: '3px solid #005fcc',
+          outlineOffset: '2px'
+        },
+        ':focus-visible': {
+          outline: '3px solid #005fcc',
+          outlineOffset: '2px'
+        }
       }}
     >
       {children}
+      
+      {/* Screen reader status */}
+      <div id={`${dropZoneId}-status`} className="sr-only">
+        {hasAssignment 
+          ? `Contains assignments: ${assignment?.functional || ''} ${assignment?.operational || ''}` 
+          : 'Empty drop zone ready for assignment'
+        }
+      </div>
       
       {hasAssignment && (
         <Box
@@ -91,7 +116,7 @@ export function DropZone({
                 return (
                   <Badge
                     variant="filled"
-                    color={isCorrect ? "green" : "red"}
+                    color={isCorrect ? "success" : "error"}
                     size="sm"
                     rightSection={
                       <ActionIcon
@@ -99,11 +124,14 @@ export function DropZone({
                         color="white"
                         variant="transparent"
                         onClick={() => onRemoveAssignment(id, 'functional')}
+                        aria-label={`Remove functional assignment: ${assignment.functional}`}
+                        title={`Remove functional assignment: ${assignment.functional}`}
                       >
-                        <IconX size={12} />
+                        <IconX size={12} aria-hidden="true" />
                       </ActionIcon>
                     }
                     style={{ paddingRight: 4 }}
+                    aria-label={`Functional area assignment: ${assignment.functional}${isCorrect ? ' (correct)' : ' (incorrect)'}`}
                   >
                     F: {assignment.functional}
                   </Badge>
@@ -117,7 +145,7 @@ export function DropZone({
                 return (
                   <Badge
                     variant="filled"
-                    color={isCorrect ? "orange" : "red"}
+                    color={isCorrect ? "success" : "error"}
                     size="sm"
                     rightSection={
                       <ActionIcon
@@ -125,11 +153,14 @@ export function DropZone({
                         color="white"
                         variant="transparent"
                         onClick={() => onRemoveAssignment(id, 'operational')}
+                        aria-label={`Remove operational assignment: ${assignment.operational}`}
+                        title={`Remove operational assignment: ${assignment.operational}`}
                       >
-                        <IconX size={12} />
+                        <IconX size={12} aria-hidden="true" />
                       </ActionIcon>
                     }
                     style={{ paddingRight: 4 }}
+                    aria-label={`Operational area assignment: ${assignment.operational}${isCorrect ? ' (correct)' : ' (incorrect)'}`}
                   >
                     O: {assignment.operational}
                   </Badge>

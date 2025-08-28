@@ -1,5 +1,5 @@
 import { Paper, Title, Stack, Text } from '@mantine/core'
-import { DraggableLabel } from './DraggableLabel'
+import { DraggableLabel } from '../../../shared/components/ui/DraggableLabel'
 
 interface ControlPanelProps {
   functionalAreas: readonly { id: string; label: string; color: string }[]
@@ -17,14 +17,24 @@ export function ControlPanel({
       radius="md" 
       withBorder 
       h="fit-content"
+      role="region"
+      aria-label="Draggable labels control panel"
+      style={{
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        borderColor: '#e0e0e0'
+      }}
     >
       <Stack gap="lg">
-        <Title order={3} c="black" ta="center">Control Panel</Title>
+        <Title order={3} c="black" ta="center" id="control-panel-title">
+          Control Panel
+        </Title>
         
         {/* Functional Areas */}
-        <Stack gap="sm">
-          <Title order={4} c="green.7">Functional Areas</Title>
-          <Text size="sm" c="black">
+        <Stack gap="sm" role="group" aria-labelledby="functional-areas-title">
+          <Title order={4} c="success.6" id="functional-areas-title">
+            Functional Areas
+          </Title>
+          <Text size="sm" c="black" component="p">
             Systems that perform specific functions
           </Text>
           {functionalAreas.map(area => (
@@ -40,9 +50,11 @@ export function ControlPanel({
         </Stack>
 
         {/* Operational Areas */}
-        <Stack gap="sm">
-          <Title order={4} c="orange.7">Operational Areas</Title>
-          <Text size="sm" c="black">
+        <Stack gap="sm" role="group" aria-labelledby="operational-areas-title">
+          <Title order={4} c="warning.6" id="operational-areas-title">
+            Operational Areas
+          </Title>
+          <Text size="sm" c="black" component="p">
             How systems are organized and grouped
           </Text>
           {operationalAreas.map(area => (

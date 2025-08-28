@@ -40,17 +40,17 @@ export interface TutorialStep {
 }
 
 export const FUNCTIONAL_AREAS = [
-  { id: 'production', label: 'Production Function', color: 'green' },
-  { id: 'control', label: 'Control Function', color: 'blue' },
-  { id: 'monitoring', label: 'Monitoring Function', color: 'cyan' },
-  { id: 'logistics', label: 'Logistics Function', color: 'orange' },
-  { id: 'maintenance', label: 'Maintenance Function', color: 'purple' },
+  { id: 'production', label: 'Production ', color: 'green' },
+  { id: 'control', label: 'Control', color: 'blue' },
+  { id: 'monitoring', label: 'Monitoring', color: 'cyan' },
+  { id: 'logistics', label: 'Logistics', color: 'orange' },
+  { id: 'maintenance', label: 'Maintenance', color: 'purple' },
   { id: 'quality', label: 'Quality Assurance', color: 'red' },
 ] as const;
 
 export const OPERATIONAL_AREAS = [
-  { id: 'manufacturing', label: 'Manufacturing Operations', color: 'blue' },
-  { id: 'support', label: 'Support Operations', color: 'purple' },
-  { id: 'external', label: 'External Operations', color: 'red' },
-  { id: 'network', label: 'Network Operations', color: 'orange' },
+  { id: 'manufacturing', label: 'Manufacturing', color: 'blue' },
+  { id: 'support', label: 'Support', color: 'purple' },
+  { id: 'external', label: 'External', color: 'red' },
+  { id: 'network', label: 'Network', color: 'orange' },
 ] as const;
