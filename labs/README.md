@@ -1,4 +1,4 @@
-# Cookie Factory - Cybersecurity Boundary Analysis Lab
+# Cookie Factory - Industrial Security Boundary Analysis Lab
 
 ## Overview
 

@@ -1,7 +1,7 @@
 {
   "name": "cookie-factory-lab",
   "version": "1.0.0",
-  "description": "Interactive cookie factory for cybersecurity boundary analysis",
+  "description": "Interactive cookie factory for industrial security boundary analysis",
   "main": "index.html",
   "scripts": {
     "dev": "vite",
@@ -12,6 +12,8 @@
   },
   "type": "module",
   "keywords": [
+    "cyber-informed engineering",
+    "industrial Security",
     "cybersecurity",
     "system-design",
     "boundaries",
