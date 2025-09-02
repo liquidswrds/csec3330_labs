@@ -286,8 +286,8 @@ export function Dashboard() {
             }}
           >
             <Text size="sm" c="dimmed" ta="center" component="p">
-              <strong>Coming Later:</strong> Module 2 (Network Security), Module 3 (Cryptography), 
-              Module 4 (Incident Response), and more cybersecurity fundamentals
+              <strong>Coming Later:</strong> Module 2, Module 3, 
+              Module 4, and more industrial security fundamentals
             </Text>
           </Paper>
         </Stack>
